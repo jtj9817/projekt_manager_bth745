@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import UserForm, ProjectsForm
 
 # Create your views here.
 def index(request):
@@ -34,4 +35,4 @@ def register(request):
 			return render(request,'registersuccess.html')
 	else:
 		form = UserForm()
-	return render(request, 'registration_form.html', {'form': form})
+	return render(request, 'register.html', {'form': form})
