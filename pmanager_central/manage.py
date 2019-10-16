@@ -5,7 +5,7 @@ import sys
 
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'proj_manager.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pmanager_central.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
