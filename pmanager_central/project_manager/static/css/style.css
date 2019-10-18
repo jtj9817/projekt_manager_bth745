@@ -258,12 +258,12 @@ h6 {
   white-space: nowrap;
 }
 
-.nav-menu > li {
+.nav-menu>li {
   float: left;
 }
 
-.nav-menu li:hover > ul,
-.nav-menu li.sfHover > ul {
+.nav-menu li:hover>ul,
+.nav-menu li.sfHover>ul {
   display: block;
 }
 
@@ -315,7 +315,7 @@ h6 {
   outline: none;
 }
 
-.nav-menu > li {
+.nav-menu>li {
   margin-left: 10px;
 }
 
@@ -339,7 +339,7 @@ h6 {
   text-transform: none;
 }
 
-.nav-menu ul li:hover > a {
+.nav-menu ul li:hover>a {
   color: #1dc8cd;
 }
 
@@ -1273,5 +1273,10 @@ body.mobile-nav-active #mobile-nav-toggle {
   #more-features p {
     margin-left: 0;
     text-align: center;
+  }
+
+  /*Custom styles*/
+  .theme-bg {
+    background: linear-gradient(45deg, #1de099, #1dc8cd);
   }
 }
