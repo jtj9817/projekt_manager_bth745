@@ -10,9 +10,10 @@ class UserForm(forms.ModelForm):
 	username = forms.CharField(max_length=30,min_length=5)
 	password = forms.CharField(widget=forms.PasswordInput)
 	email = forms.EmailField(widget=forms.EmailInput, required=True)
+	full_name = forms.CharField(label='Full Name', max_length=30, min_length=4, required=True)
 	class Meta: 
 		model = User
-		fields = ['username', 'email', 'password']
+		fields = ['full_name', 'username', 'email', 'password']
 
 	#Clean username data field to avoid conflict with URL slugging	
 	def clean_username(self):

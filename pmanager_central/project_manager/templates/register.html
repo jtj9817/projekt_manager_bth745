@@ -87,7 +87,7 @@
 	<p class="text-center">Get started with your free account</p>
 	<form>
 	{% block content %}
-        <form  class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">     
+        <form  class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">     
         {% csrf_token %} 
          {% for field in form %}
                             <p>
@@ -103,10 +103,8 @@
                         {% endfor %}                                    
         
         {% endblock %}
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"  data-toggle="modal" data-target="#myModal"> Create Account  </button>
-        </form>
-    </div> <!-- form-group// -->                                                              
+         <button type="submit" formmethod="post" class="btn btn-primary btn-block"> Create Account  </button>
+        </form>                                                     
 </form>
 </article>
 </div> <!-- card.// -->

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User, Permission
 from django.urls import reverse
@@ -5,8 +7,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
 from django.core.validators import RegexValidator
-# Create your models here.
-
 
 class Organization(models.Model):
     orgname = models.CharField(max_length=200)
@@ -75,11 +75,12 @@ class Profile(models.Model):
 
     def get_absolute_url(self):
         return reverse('dj-auth:profile')
-    # Methods to create and update Profile once a User was created
-    @receiver(post_save, sender=User) 
-    def create_profile(sender, instance, created, **kwargs):
+ 	#Methods to create and update Profile once a User was created
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
         if created:
-                Profile.objects.create(user=instance)
+            Profile.objects.create(user=instance)
+            
     @receiver(post_save, sender=User)
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()

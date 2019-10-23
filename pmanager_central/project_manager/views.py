@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from .forms import UserForm, ProjectsForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils.decorators import method_decorator
 from django.db import transaction
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def index(request):
@@ -40,7 +43,7 @@ def register(request):
 			user.save()
 			user = authenticate(username=username, password=password)
 			login(request, user)
-			return render(request,'registersuccess.html')
+			return render(request,'register_success.html')
 	else:
 		form = UserForm()
 	return render(request, 'register.html', {'form': form})
