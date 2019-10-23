@@ -28,21 +28,6 @@ class Organization(models.Model):
         # Returns a URL for accessing an Organization object instance
         return reverse('volunto:organization-detail', args=(self.orgid,))
 
-
-class Project(models.Model):
-    projectname = models.CharField("Project Name", max_length=200)
-    projdesc = models.CharField("Project Description", max_length=500)
-    projectid = models.AutoField(primary_key=True)
-    projstatus = models.BooleanField("Project Status", default=False)
-    project_deadline = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
-    proj_created_at = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return self.projectname
-    def get_absolute_url(self):
-        # Returns a URL for accessing a Project object instance
-        return reverse('volunto:project-detail', args=(self.projectid,))
-
-
 class Task(models.Model):
     taskid = models.AutoField(primary_key=True)
     task_name = models.CharField(max_length=128)
@@ -53,15 +38,32 @@ class Task(models.Model):
         (3, 'High Priority')
     )
     task_priority = models.PositiveIntegerField(choices=TASK_PRIORITY, default=1)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
     def __str__(self):
         return self.postitle
+
+
+class Project(models.Model):
+    projectname = models.CharField("Project Name", max_length=200)
+    projdesc = models.CharField("Project Description", max_length=500)
+    projectid = models.AutoField(primary_key=True)
+    projstatus = models.BooleanField("Project Status", default=False)
+    project_deadline = models.DateTimeField(auto_now=False, auto_now_add=False, null=False)
+    proj_created_at = models.DateTimeField(auto_now_add=True)
+    project_tasks = models.ForeignKey(Task, on_delete=models.CASCADE, default=1)
+    def __str__(self):
+        return self.projectname
+    def get_absolute_url(self):
+        # Returns a URL for accessing a Project object instance
+        return reverse('project-detail', args=(self.projectid,))
+
+
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=30, unique=True,
                             null=True, default=None)
+    full_name = models.CharField("Full Name", max_length=30, default=1)
     # Verbose name for Django Admin interface of Profile
 
     def __str__(self):
@@ -74,10 +76,10 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse('dj-auth:profile')
     # Methods to create and update Profile once a User was created
-
-    def create_profile(sender, **kwargs):
-        user = kwargs["instance"]
-        if kwargs["created"]:
-            user_profile = Profile(user=user)
-            user_profile.save()
-    post_save.connect(create_profile, sender=User)
+    @receiver(post_save, sender=User) 
+    def create_profile(sender, instance, created, **kwargs):
+        if created:
+                Profile.objects.create(user=instance)
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()

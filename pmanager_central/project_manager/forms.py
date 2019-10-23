@@ -32,11 +32,15 @@ class UserForm(forms.ModelForm):
 			return email
 		raise forms.ValidationError('This email address is already in use.')
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['full_name']
 
 class ProjectsForm(forms.ModelForm):
 	class Meta:
 		model = Project
-		fields = ['projectname', 'projdesc', 'projstatus']
+		fields = ['projectname', 'projdesc', 'project_deadline', 'project_tasks']
 
 #Form for User profile and to be extended using the Profile model
 class UserCreationForm(forms.ModelForm):

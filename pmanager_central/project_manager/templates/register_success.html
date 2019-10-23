@@ -1,8 +1,13 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <!-- Favicons -->
+  <meta charset="utf-8">
+  <title>Register Account</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="" name="keywords">
+  <meta content="" name="description">
+
+<!-- Favicons -->
   <link href="{% static 'img/favicon.png' %}" rel="icon">
   <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
@@ -34,16 +39,14 @@
 
   <!-- Template Main Javascript File -->
   <script src="{% static 'js/main.js' %}"></script>
-
 </head>
+<body style="background: gray ">
 
-<body>
-
-  <!--==========================
+ <!--==========================
     Header
   ============================-->
   <header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
-    <div class="container">
+    <div class="container" >
       <div id="logo" class="pull-left">
         <h1><a href="#intro" class="scrollto">Project Manager</a></h1>
         <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
@@ -71,14 +74,20 @@
               <li><a href="#">Drop Down 5</a></li>
             </ul>
           </li>
-          <li><a href="#contact">Contact Us</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
-    {% block content %}
+{% block title %}Registration Success{% endblock %}
 
-  {% endblock %}
+{% block content %}
+<div class="container-fluid">
+  <div class="alert alert-success">
+    <strong>Registration Successful!</strong>
+    <p>You've successfully registered and your account is now active!
+	</p>
+  </div>
+</div>
+{% endblock %}
 </body>
-
 </html>
