@@ -15,7 +15,8 @@ from django.contrib.auth import authenticate, login
 # Create your views here.
 def index(request):
 	return render(request, 'index.html')
-
+def dashboard(request):
+    return render(request, 'dashboard.html')
 def login_user(request):
 	if request.method == "POST":
 		username = request.POST['username']
@@ -39,6 +40,7 @@ def register(request):
 			user= form.save(commit=False)
 			username = form.cleaned_data.get('username')
 			password = form.cleaned_data.get('password')
+			full_name = form.cleaned_data.get('full_name')
 			user.set_password(password)
 			user.save()
 			user = authenticate(username=username, password=password)

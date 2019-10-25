@@ -7,10 +7,10 @@ from django.core.exceptions import ValidationError
 
 
 class UserForm(forms.ModelForm):
-	username = forms.CharField(max_length=30,min_length=5)
-	password = forms.CharField(widget=forms.PasswordInput)
-	email = forms.EmailField(widget=forms.EmailInput, required=True)
-	full_name = forms.CharField(label='Full Name', max_length=30, min_length=4, required=True)
+	username = forms.CharField(max_length=30,min_length=5, widget=forms.TextInput(attrs={'placeholder': 'Enter your username'}))
+	password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter your password'}))
+	email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Enter your email'}), required=True)
+	full_name = forms.CharField(label='Full Name', max_length=30, min_length=4, required=True,  widget=forms.TextInput(attrs={'placeholder': 'Enter your full name'}))
 	class Meta: 
 		model = User
 		fields = ['full_name', 'username', 'email', 'password']
