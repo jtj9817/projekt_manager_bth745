@@ -39,6 +39,9 @@ class ProfileForm(forms.ModelForm):
         fields = ['full_name']
 
 class ProjectsForm(forms.ModelForm):
+	projectname = forms.CharField(max_length=30,min_length=5, widget=forms.TextInput(attrs={'placeholder': 'Enter the project name'}))
+	projdesc = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Describe the project'}), required=True)
+	project_deadline = forms.DateField(widget=forms.SelectDateWidget, required=True)
 	class Meta:
 		model = Project
 		fields = ['projectname', 'projdesc', 'project_deadline', 'project_tasks']

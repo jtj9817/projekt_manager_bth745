@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from .forms import UserForm, ProjectsForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
-from django.views.generic import DetailView, View, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, View, CreateView, UpdateView, DeleteView, ListView
 from .models import Project, Organization, Profile
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy, resolve
@@ -50,6 +50,7 @@ def register(request):
 		form = UserForm()
 	return render(request, 'register.html', {'form': form})
 
+#Function for updating prfoile, currently not used
 @login_required
 @transaction.atomic
 def update_profile(request):
@@ -72,17 +73,14 @@ def update_profile(request):
 
 
 #Views for Projects 
-class ProjectListView(LoginRequiredMixin,generic.ListView):
+class ProjectList(LoginRequiredMixin,ListView):
 	model = Project
 	context_object_name = 'projects_list'
-	queryset = Project.objects.all()
-	template_name = 'project_list.html'
+	template_name = 'dashboard.html'
 
-	def get_queryset(self):
-		return Project.objects.all()
 	def get_context_data(self, **kwargs):
-		context = super(ProjectListView, self).get_context_data(**kwargs)
-		context['Temp data'] = 'Temp data for projects'
+		context = super().get_context_data(**kwargs)
+		context['project_list'] = Project.objects.all()
 		return context
 
 class ProjectDetailView(LoginRequiredMixin,generic.DetailView):
@@ -91,11 +89,12 @@ class ProjectDetailView(LoginRequiredMixin,generic.DetailView):
 
 class ProjectCreate(LoginRequiredMixin,CreateView):
 	model = Project
-	fields = '__all__'
+	template_name = 'project_create.html'
+	fields = ['projectname', 'projdesc', 'project_deadline', 'project_tasks']
 
 class ProjectUpdate(LoginRequiredMixin, UpdateView):
 	model = Project
 	fields = '__all__'
 class ProjectDelete(LoginRequiredMixin,DeleteView):
 	model = Project
-	success_url = reverse_lazy('volunto:projects')
+	success_url = reverse_lazy('projects')

@@ -6,11 +6,10 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('register/', views.register, name='register'),
     path('login_user/', views.login_user, name='login_user'),
-    path('dashboard/', views.dashboard, name='dashboard')
-    #path(r'^login_user/$', views.login_user, name='login_user'),
-    #path(r'^logout_user/$', views.logout_user, name='logout_user'),
-    #path(r'^accounts/update/(?P<pk>[\-\w]+)/$', views.edit_profile, name='account_update'),
-    #path(r'^profile/$',views.ProfileDetail.as_view(), name="profile"),
-    #path(r'^profile/edit/$', views.ProfileUpdate.as_view(), name="profile_update")
+    path('dashboard/', views.ProjectList.as_view(), name='dashboard'),
+    path('projects/create', views.ProjectCreate.as_view(), name='project-create'),
+    path('projects/<int:pk>', views.ProjectDetailView.as_view(), name='project-detail'),
+    path('project/<int:pk>', views.ProjectUpdate.as_view(), name='project-update'),
+    path('project/<int:pk>/delete', views.ProjectDelete.as_view(), name='project-delete')
 ]
 

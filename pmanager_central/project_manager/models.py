@@ -39,7 +39,7 @@ class Task(models.Model):
     )
     task_priority = models.PositiveIntegerField(choices=TASK_PRIORITY, default=1)
     def __str__(self):
-        return self.postitle
+        return self.task_name
 
 
 class Project(models.Model):
