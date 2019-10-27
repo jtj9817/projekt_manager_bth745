@@ -50,15 +50,25 @@
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
-          <li class="{% block register_active %}{% endblock %}"><a href="{% url 'register' %}">Register</a></li>
+		   {% if user.is_authenticated %} 
+		   {% block empty %}{% endblock%}
+		   {% else %}
+		             <li class="{% block register_active %}{% endblock %}"><a href="{% url 'register' %}">Register</a></li>
           <li class="{% block login_active %}{% endblock %}"><a href="{% url 'login' %}">Log In</a></li>
+			{% endif %}
           <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
           <li><a href="{% url 'project-create' %}">Create Project</a></li>
+		   {% if user.is_authenticated %}
+    	  <li style="position: absolute; right: 85px;"><a href="%">Welcome, {{ user.get_username }}</a></li>
+    	   {% csrf_token %}
+       	   <li style="position: absolute; right: 5px;"><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>   
+		  {% endif %} 
         </ul>
+
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
-  <div class="container-fluid" style="margin-top: 300px">
+  <div class="container-fluid" style="margin-top: 100px">
 	<div class="row">
 		<div class="col-md-4">
 			<dl>

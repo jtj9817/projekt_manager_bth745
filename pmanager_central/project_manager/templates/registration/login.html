@@ -1,4 +1,6 @@
 {% load static %}
+{% load crispy_forms_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,38 +45,22 @@
 </head>
 <body>
 
- <!--==========================
+  <!--==========================
     Header
   ============================-->
   <header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
-    <div class="container" >
+    <div class="container">
       <div id="logo" class="pull-left">
         <h1><a href="#intro" class="scrollto">Project Manager</a></h1>
         <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
       </div>
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li class="menu-active"><a href="#intro">Home</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="{% url 'register' %}">Register</a></li>
-          <li class="menu-has-children"><a href="">Drop Down</a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="menu-has-children"><a href="#">Drop Down 2</a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-              <li><a href="#">Drop Down 5</a></li>
-            </ul>
-          </li>
+          <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
+          <li class="{% block register_active %}{% endblock %}"><a href="{% url 'register' %}">Register</a></li>
+          <li class="{% block login_active %}{% endblock %}"><a href="{% url 'login' %}">Log In</a></li>
+          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+          <li><a href="{% url 'project-create' %}">Create Project</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -82,38 +68,15 @@
 <div class="container" style="margin-top: 100px">
 <div class="card bg-light">
 <article class="card-body mx-auto" style="max-width: 400px;">
-	<h4 class="card-title mt-3 text-center">Create Account</h4>
-	<p class="text-center">Get started with your free account</p>
-	<form>
-	<div class="form-group input-group">
-		<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
-		 </div>
-        <input name="" class="form-control" placeholder="Full name" type="text">
-    </div> <!-- form-group// -->
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-		 </div>
-        <input name="" class="form-control" placeholder="Email address" type="email">
-    </div>
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-		</div>
-        <input class="form-control" placeholder="Create password" type="password">
-    </div> <!-- form-group// -->
-    <div class="form-group input-group">
-    	<div class="input-group-prepend">
-		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-		</div>
-        <input class="form-control" placeholder="Repeat password" type="password">
-    </div> <!-- form-group// -->                                      
+	<h4 class="card-title mt-3 text-center">Login to your account</h4>
+	<form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">    
+  {% csrf_token %}    
+  {{ form | crispy }}
     <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
-    </div> <!-- form-group// -->      
-    <p class="text-center">Have an account? <a href="">Log In</a> </p>                                                                 
+        <button type="submit" class="btn btn-primary btn-block"> Log-in  </button>
+    </div>                                                     
 </form>
+<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 </article>
 </div> <!-- card.// -->
 

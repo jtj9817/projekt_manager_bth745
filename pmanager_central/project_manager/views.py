@@ -25,12 +25,12 @@ def login_user(request):
 		if user is not None:
 			if user.is_active:
 				login(request, user)
-				return render(request, 'index.html')
+				return render(request, 'dashboard.html')
 			else:
 				return render(request, 'login.html', {'error_message': 'Account is disabled.'})
 		else:
 			return render(request, 'login.html', {'error_message': 'Invalid login'})
-	return render(request, 'login.html')	
+	return render(request, 'dashboard.html')	
 
 #User submits the form filled with data in a POST request
 def register(request):
@@ -73,6 +73,22 @@ def update_profile(request):
 
 
 #Views for Projects 
+@login_required
+@transaction.atomic
+def project_create(request):
+	if request.method == 'POST':
+		form = ProjectsForm(request.POST)
+		if form.is_valid():
+			project = form.save(commit=False)
+			projectname = form.cleaned_data.get('projectname')
+			projdesc = form.cleaned_data.get('projdesc')
+			project_deadline = form.cleaned_data.get('project_deadline')
+			project.save()
+			return render(request,'project_success.html')
+	else:
+		form = ProjectsForm()
+	return render(request, 'project_create.html', {'form': form})
+
 class ProjectList(LoginRequiredMixin,ListView):
 	model = Project
 	context_object_name = 'projects_list'
@@ -86,12 +102,7 @@ class ProjectList(LoginRequiredMixin,ListView):
 class ProjectDetailView(LoginRequiredMixin,generic.DetailView):
 	model = Project
 	template_name = "project_detail.html"
-
-class ProjectCreate(LoginRequiredMixin,CreateView):
-	model = Project
-	template_name = 'project_create.html'
-	fields = ['projectname', 'projdesc', 'project_deadline', 'project_tasks']
-
+	
 class ProjectUpdate(LoginRequiredMixin, UpdateView):
 	model = Project
 	fields = '__all__'
