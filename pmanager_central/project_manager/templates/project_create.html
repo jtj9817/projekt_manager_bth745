@@ -1,76 +1,148 @@
 {% load static %}
-{% load crispy_forms_tags %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Create Project</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h2,h4,h5,h6 {font-family: "Raleway", sans-serif; }
 
-<!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
-  <!-- Bootstrap CSS File -->
-  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <!-- Libraries CSS Files -->
-  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-  <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'lib/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
-  <!-- Main Stylesheet File -->
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
-  <!-- JavaScript Libraries -->
-  <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
-  <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'lib/easing/easing.min.js' %}"></script>
-  <script src="{% static 'lib/wow/wow.min.js' %}"></script>
-  <script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
-  <script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
-  <script src="{% static 'lib/magnific-popup/magnific-popup.min.js' %}"></script>
-  <!-- Template Main Javascript File -->
-  <script src="{% static 'js/main.js' %}"></script>
-</head>
-<body style="background: gray">
- <!--==========================
-    Header
-  ============================-->
-  <header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
-    <div class="container">
-      <div id="logo" class="pull-left">
-        <h1><a href="#intro" class="scrollto">Project Manager</a></h1>
-        <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
-      </div>
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
-          <li class="{% block register_active %}{% endblock %}"><a href="{% url 'register' %}">Register</a></li>
-          <li class="{% block login_active %}{% endblock %}"><a href="{% url 'login' %}">Log In</a></li>
-          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-          </li>
-        </ul>
-      </nav><!-- #nav-menu-container -->
+h1,p,h3 {color: black;}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  width: 95%;
+  margin-left: 55%;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=date] {
+  width: 100%;
+  padding: 15px;
+  margin: 0px 0 25px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=date]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 20px;
+}
+
+/* Set a style for the submit button */
+.cancelbtn, .createbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 8px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  opacity: 0.9;
+}
+
+.cancelbtn:hover, .createbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+body, html {
+  height: 100%;
+  line-height: 1.6;
+}
+
+/* Full height image header */
+.bgimg-1 {
+  background-position: center;
+  background-size: cover;
+  background-image: url("{% static 'img/background.jpeg' %}");
+  min-height: 100%;
+}
+
+.w3-bar .w3-button {
+  padding: 16px;
+}
+</style>
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-card" id="myNavbar">
+      <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+    <!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small">
+      <a href="#about" class="w3-bar-item w3-button"> ABOUT</a>
+      <a href="#projects" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My Projects</a>
+      <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
+      <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Sign out</a>
     </div>
-  </header><!-- #header -->
-<div class="container" style="margin-top: 110px">
-<div class="card bg-light">
-<article class="card-body mx-auto" style="max-width: 400px;">
-	<h4 class="card-title mt-3 text-center">Create The Project!</h4>
-	<form>
-        <form  class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">     
-        {% csrf_token %} 
-        {{ form.media }}
-        {{ form | crispy }}
-         <button type="submit" formmethod="post" class="btn btn-primary btn-block"> Create Project  </button>
-        </form>                                                     
-</form>
-</article>
-</div> <!-- card.// -->
-</div> 
-<!--container end.//-->
-</body>
-</html>
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Header with full-height image -->
+<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-row-padding w3-center w3-left-align w3-text-white" style="margin-top:64px" >
+        <div class="w3-half" style="margin-top:50px" >
+            <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %} 
+             {{ form.media }}
+              <div class="container">
+                <h1>Create a New Project</h1>
+
+                <hr>
+                <h3 class="w3-left-align">Project Name</h3>
+                <input type="text" placeholder="Enter project name" name="projectname" required>
+
+                <h3 class="w3-left-align">Project Description</h3>
+                <textarea rows="4" class="w3-input w3-border" style="resize:none" placeholder="Enter project desctiption" name="projdesc"></textarea>
+                
+                <h3 class="w3-left-align" style="margin-top:30px" >Project End Date</h3>
+                {{ form.project_deadline }}
+               
+                <h3 class="w3-left-align">Tasks</h3>
+                {{ form.project_tasks }}
+                <hr>
+
+                <form> 
+                    <input class="cancelbtn" type="button" value="Cancel" onclick="window.location.href='http://127.0.0.1:8000/project_manager/dashboard/'" />
+                </form>
+                <button type="submit" formmethod="post" class="createbtn">Create</button>
+              </div>
+              
+            </form>
+        </div>
+  </div>
+
+</header>
+
+<script>
