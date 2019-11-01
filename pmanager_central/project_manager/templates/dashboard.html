@@ -1,183 +1,236 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+	<meta charset="utf-8">
+    <title>Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
-<head>
-	<!-- Favicons -->
-	<link href="{% static 'img/favicon.png' %}" rel="icon">
-	<link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    <!-- Bootstrap CSS File -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i"
-		rel="stylesheet">
+    <style>
+		.vertical-menu a {
+			background-color: #eee;
+            color: black;
+            display: block;
+            padding: 12px;
+            text-decoration: none;
+        }
+        .vertical-menu a:hover {
+			background-color: #e4dede;
+        }
+    </style>
+  </head>
 
-
-	<!-- Bootstrap CSS File -->
-	<link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-	<!-- Libraries CSS Files -->
-	<link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-	<link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
-	<link href="{% static 'lib/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
-
-	<!-- Main Stylesheet File -->
-	<link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-	<!-- JavaScript Libraries -->
-	<script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-	<script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
-	<script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-	<script src="{% static 'lib/easing/easing.min.js' %}"></script>
-	<script src="{% static 'lib/wow/wow.min.js' %}"></script>
-	<script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
-	<script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
-	<script src="{% static 'lib/magnific-popup/magnific-popup.min.js' %}"></script>
-	<script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
-
-	<!-- Template Main Javascript File -->
-	<script src="{% static 'js/main.js' %}"></script>
-
-</head>
-
-<body>
-	<!--==========================
-    Header
-  ============================-->
-	<header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
-		<div class="container">
-			<div id="logo" class="pull-left">
-				<h1><a href="#intro" class="scrollto">Project Manager</a></h1>
-				<!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
-			</div>
-			<nav id="nav-menu-container">
-				<ul class="nav-menu">
-					<li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
-					{% if user.is_authenticated %}
-					{% block empty %}{% endblock%}
-					{% else %}
-					<li class="{% block register_active %}{% endblock %}"><a href="{% url 'register' %}">Register</a>
+  <body>
+	  <!-- Header -->
+	  <header>
+	  	<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="text-transform: uppercase;">
+			<a class="navbar-brand" href="#">Product Managment</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			  <span class="navbar-toggler-icon"></span>
+			</button>
+				
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+				    <li class="nav-item">
+					   <a class="nav-link" href="{% url 'index' %}">About</a>
 					</li>
-					<li class="{% block login_active %}{% endblock %}"><a href="{% url 'login' %}">Log In</a></li>
-					{% endif %}
-					<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-					<li><a href="{% url 'project-create' %}">Create Project</a></li>
-					{% if user.is_authenticated %}
-					<li style="position: absolute; right: 85px;"><a href="%">Welcome, {{ user.get_username }}</a></li>
-					{% csrf_token %}
-					<li style="position: absolute; right: 5px;"><a
-							href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-					{% endif %}
+					<li class="nav-item">
+					  <a class="nav-link" href="#">Products & Services</a>
+					</li>
+					<li class="nav-item active">
+					  <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+					</li>
+					<li class="nav-item">
+					  <a class="nav-link" href="{% url 'project-create' %}">Create Project</a>
+					</li>
 				</ul>
-
-			</nav><!-- #nav-menu-container -->
-		</div>
-	</header><!-- #header -->
-	<div class="container-fluid" style="margin-top: 100px">
-		<div class="row">
-			<div class="col-md-4">
-				<dl>
-					<dt>
-						Description lists
-					</dt>
-					<dd>
-						A description list is perfect for defining terms.
-					</dd>
-					<dt>
-						Euismod
-					</dt>
-					<dd>
-						Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
-					</dd>
-					<dd>
-						Donec id elit non mi porta gravida at eget metus.
-					</dd>
-					<dt>
-						Malesuada porta
-					</dt>
-					<dd>
-						Etiam porta sem malesuada magna mollis euismod.
-					</dd>
-					<dt>
-						Felis euismod semper eget lacinia
-					</dt>
-					<dd>
-						Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
-						justo sit amet risus.
-					</dd>
-				</dl>
+				{% if user.is_authenticated %}
+				{% block empty %}{% endblock%}
+				{% else %}
+					<span span class="navbar-text" class="{% block register_active %}{% endblock %}">
+						<a href="{% url 'register' %}">Sign Out</a>
+					</span>
+					<span class="navbar-text" class="{% block login_active %}{% endblock %}">
+                		<a href="{% url 'login' %}">Sign In</a>
+					</span>
+				{% endif %}
+				{% if user.is_authenticated %}
+					<span class="navbar-text" style="padding-right: 10px;">
+						<a href="%">{{ user.get_username }}</a>
+					</span>
+				{% csrf_token %}
+					<span class="navbar-text">
+						<a href="{% url 'logout'%}?next={{request.path}}">Sign out</a>
+					</span>
+				{% endif %}
 			</div>
-			<div class="col-md-4">
-				<h2>My Projects</h2>
-				<table class="table table-responsive table-hover">
+		</nav>
+	</header>
+	<!-- Header -->
+
+	<!-- Container -->
+	<div class="container">
+		<div class="row" style="margin-top: 40px;">
+			<div class="col-sm-2">
+				<div class="vertical-menu">
+					<a href="#">Link 1</a>
+					<a href="#">Link 2</a>
+					<a href="#">Link 3</a>
+					<a href="#">Link 4</a>
+					<a href="#">Link 5</a>
+					<a href="#">Link 6</a>
+				</div>			
+			</div>
+	
+			<div class="col-sm-8">
+				<h2>Recent Projects</h2>
+				<table class="table table-responsive table-hover border border-secondary rounded">
 					<thead>
 						<tr>
 							<th>
 								Project
 							</th>
-							<th>
-								Project Due Date
+                        	<th>
+								Description
 							</th>
 							<th>
-								Project Created
+								Deadline
 							</th>
 							<th>
+								&nbsp;
 							</th>
 						</tr>
 					</thead>
 					<tbody>
-						{% for project in project_list %}
+					{% for project in project_list %}
 						<tr class="clickable">
 							<td>
 								{{ project.projectname }}
 							</td>
 							<td>
+								{{ project.projdesc }}
+							</td>
+							<td>
 								{{ project.project_deadline }}
 							</td>
 							<td>
-								{{ project.proj_created_at }}
-							</td>
-						</tr>
-						<tr>
-							<td>
 								<button type="button" class="btn btn-primary">Edit</button>
-								<button type="button" class="btn btn-warning">Delete</button>
 							</td>
 						</tr>
-						{% endfor %}
+					{% endfor %}
 					</tbody>
-
-				</table>
+			</table>
 			</div>
-			<div class="col-md-4">
-				<ol>
-					<li class="list-item">
-						Lorem ipsum dolor sit amet
-					</li>
-					<li class="list-item">
-						Consectetur adipiscing elit
-					</li>
-					<li class="list-item">
-						Integer molestie lorem at massa
-					</li>
-					<li class="list-item">
-						Facilisis in pretium nisl aliquet
-					</li>
-					<li class="list-item">
-						Nulla volutpat aliquam velit
-					</li>
-					<li class="list-item">
-						Faucibus porta lacus fringilla vel
-					</li>
-					<li class="list-item">
-						Aenean sit amet erat nunc
-					</li>
-					<li class="list-item">
-						Eget porttitor lorem
-					</li>
-				</ol>
+
+		    <div class="col-sm-2">
+				<h2>&nbsp;</h2>
+                <table class="table table-sm table-responsive table-hover border border-secondary rounded">
+						<thead>
+						  <tr>
+							<th scope="col">To Do List</th>
+						  </tr>
+						</thead>
+						<tbody style="font-size: 12px;">
+							<td>Lorem ipsum dolor sit amet</td>
+						  </tr>
+						  <tr>
+                            <td>Consectetur adipiscing elit</td>
+						  </tr>
+						   <tr>
+                            <td>Integer molestie lorem at massa</td>
+						  </tr>
+						  <tr>
+                            <td>Consectetur adipiscing elit</td>
+						  </tr>
+						  <tr>
+							<td>Facilisis in pretium nisl aliquet</td>
+						  </tr>
+						  <tr>
+							<td>Nulla volutpat aliquam velit</td>
+						  </tr>
+						</tbody>
+					  </table>
 			</div>
 		</div>
-	</div>
-</body>
-
+    </div>
+	<!-- Container -->
+	
+  	<!-- Footer -->
+	<footer class="page-footer font-small">
+		<!-- Footer Links -->
+		<div class="container">
+			<hr class="rgba-white-light" style="margin: 0 15%;">
+			<!-- Grid row-->
+			<div class="row text-center d-flex justify-content-center pt-5 mb-3">
+				<!-- Grid column -->
+				<div class="col-md-2 mb-3">
+					<h6 class="text-uppercase font-weight-bold">
+						<a href="{% url 'index' %}">About</a>
+					</h6>
+				</div>
+				<!-- Grid column -->
+					
+				<!-- Grid column -->
+				<div class="col-md-2 mb-3">
+					<h6 class="text-uppercase font-weight-bold">
+						<a href="#!">Products</a>
+					</h6>
+				</div>
+				<!-- Grid column -->
+				  
+				<!-- Grid column -->
+				<div class="col-md-2 mb-3">
+					<h6 class="text-uppercase font-weight-bold">
+						<a href="#!">Copyright</a>
+					</h6>
+				</div>
+				<!-- Grid column -->
+					
+				<!-- Grid column -->
+				<div class="col-md-2 mb-3">
+					<h6 class="text-uppercase font-weight-bold">
+						<a href="#!">Privacy</a>
+					</h6>
+				</div>
+				<!-- Grid column -->
+					
+			<!-- Grid column -->
+			<div class="col-md-2 mb-3">
+				<h6 class="text-uppercase font-weight-bold">
+					<a href="#!">Contact</a>
+				</h6>
+			</div>
+			<!-- Grid column -->
+					
+		</div>
+		<!-- Grid row-->
+					  
+	  	<hr class="rgba-white-light" style="margin: 0 15%;">
+					
+	  </div>
+	  <!-- Footer Links -->
+					
+	  <!-- Copyright -->
+	  	<div class="float-right"><a href="#">Back to top</a></div>
+		<div class="footer-copyright text-center py-3">&copy; 2019 All rights reserved. Design by Product Manager</div>
+	  <!-- Copyright -->
+					
+    </footer>
+	<!-- Footer -->
+				
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+				
+	<!-- Template Main Javascript File -->
+	<script src="{% static 'js/main.js' %}"></script>
+	
+  </body>
 </html>
