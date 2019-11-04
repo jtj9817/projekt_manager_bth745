@@ -36,47 +36,49 @@
     <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
     <!-- Template Main Javascript File -->
     <script src="{% static 'js/main.js' %}"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+
+     	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 </head>
 
 <body style="background: gray">
-    <!--==========================
+	<!--==========================
     Header
   ============================-->
-    <header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
-        <div class="container">
-            <div id="logo" class="pull-left">
-                <h1><a href="#intro" class="scrollto">Project Manager</a></h1>
-                <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
-            </div>
-            <nav id="nav-menu-container">
-                <ul class="nav-menu">
-                    <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
-                    {% if user.is_authenticated %}
-                    {% block empty %}{% endblock%}
-                    {% else %}
-                    <li class="{% block register_active %}{% endblock %}"><a href="{% url 'register' %}">Register</a>
-                    </li>
-                    <li class="{% block login_active %}{% endblock %}"><a href="{% url 'login' %}">Log In</a></li>
-                    {% endif %}
-                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                    <li><a href="{% url 'project-create' %}">Create Project</a></li>
-                    {% if user.is_authenticated %}
-                    <li style="position: absolute; right: 85px;"><a href="%">Welcome, {{ user.get_username }}</a></li>
-                    {% csrf_token %}
-                    <li style="position: absolute; right: 5px;"><a
-                            href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-                    {% endif %}
-                </ul>
-
-            </nav><!-- #nav-menu-container -->
-        </div>
-    </header><!-- #header -->
+	<header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
+		<div class="w3-bar">
+			<div id="logo" class="pull-left">
+				<h1><a href="#intro" class="scrollto">Project Manager</a></h1>
+				<!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
+			</div>
+			<nav id="w3-bar">
+				<ul class="nav-menu">
+					<li class="menu-active"><a class="w3-bar-item w3-button" href="{% url 'index' %}">Home</a></li>
+					{% if user.is_authenticated %}
+					{% block empty %}{% endblock%}
+					{% else %}
+					<li class="{% block register_active %}{% endblock %}"><a class="w3-bar-item w3-button" href="{% url 'register' %}">Register</a>
+					</li>
+					<li class="{% block login_active %}{% endblock %}"><a class="w3-bar-item w3-button" href="{% url 'login' %}">Log In</a></li>
+					{% endif %}
+					<li><a  class="w3-bar-item w3-button" href="{% url 'dashboard' %}">Dashboard</a></li>
+					<li><a  class="w3-bar-item w3-button" href="{% url 'project-create' %}">Create Project</a></li>
+				</ul>
+				<ul class="nav-menu w3-right">
+				{% if user.is_authenticated %}
+					<li><a href="%" class="w3-bar-item w3-button w3-right">Welcome, {{ user.get_username }}</a></li>
+					{% csrf_token %}
+					<li><a class="w3-bar-item w3-button w3-right"
+							href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+				{% endif %}
+				</ul>
+			</nav><!-- #nav-menu-container -->
+		</div>
+	</header><!-- #header -->
     <div class="container" style="margin-top: 110px">
         <div class="card bg-light">
             <article class="card-body mx-auto" style="max-width: 400px;">
-                <h4 class="card-title mt-3 text-center">Create The Project!</h4>
+                <h4 class="card-title mt-3 text-center">Edit Project Details</h4>
                 <form>
                     <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -84,7 +86,7 @@
                         {{ form | crispy }}
                         <h4>Tasks <a href="bannerformodal" data-toggle= "modal" data-target="#taskModal"><i class="fas fa-plus w3-button"></i></a></h4>
                         <!-- {{ task_form | crispy }} -->
-                        <button type="submit" formmethod="post" class="btn btn-primary btn-block"> Create Project
+                        <button type="submit" formmethod="post" class="btn btn-primary btn-block"> Save Changes
                         </button>
                     </form>
                 </form>

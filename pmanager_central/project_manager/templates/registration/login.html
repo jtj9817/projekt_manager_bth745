@@ -3,6 +3,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Register Account</title>
@@ -10,19 +11,19 @@
   <meta content="" name="keywords">
   <meta content="" name="description">
 
-<!-- Favicons -->
+  <!-- Favicons -->
   <link href="{% static 'img/favicon.png' %}" rel="icon">
   <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i"
+    rel="stylesheet">
 
   <!-- Bootstrap CSS File -->
   <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
   <!-- Libraries CSS Files -->
   <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
   <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
   <link href="{% static 'lib/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
 
@@ -38,11 +39,12 @@
   <script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
   <script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
   <script src="{% static 'lib/magnific-popup/magnific-popup.min.js' %}"></script>
-
+  <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
 
   <!-- Template Main Javascript File -->
   <script src="{% static 'js/main.js' %}"></script>
 </head>
+
 <body>
 
   <!--==========================
@@ -65,22 +67,23 @@
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
-<div class="container" style="margin-top: 100px">
-<div class="card bg-light">
-<article class="card-body mx-auto" style="max-width: 400px;">
-	<h4 class="card-title mt-3 text-center">Login to your account</h4>
-	<form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">    
-  {% csrf_token %}    
-  {{ form | crispy }}
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Log-in  </button>
-    </div>                                                     
-</form>
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-</article>
-</div> <!-- card.// -->
+  <div class="container" style="margin-top: 100px">
+    <div class="card bg-light">
+      <article class="card-body mx-auto" style="max-width: 400px;">
+        <h4 class="card-title mt-3 text-center">Login to your account</h4>
+        <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form | crispy }}
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block"> Log-in </button>
+          </div>
+        </form>
+        <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+      </article>
+    </div> <!-- card.// -->
 
-</div> 
-<!--container end.//-->
-<body>>
+  </div>
+  <!--container end.//-->
+
+  <body>
 </html>

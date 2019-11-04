@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render, redirect
-from .forms import UserForm, ProjectsForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import UserForm, ProjectsForm, TasksForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.views.generic import DetailView, View, CreateView, UpdateView, DeleteView, ListView
+from django.views.generic.edit import FormView
 from .models import Project, Organization, Profile
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils.decorators import method_decorator
 from django.db import transaction
 from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 # Create your views here.
 def index(request):
@@ -78,7 +80,8 @@ def update_profile(request):
 def project_create(request):
 	if request.method == 'POST':
 		form = ProjectsForm(request.POST)
-		if form.is_valid():
+		task_form = TasksForm(request.POST)
+		if form.is_valid() & task_form.is_valid():
 			project = form.save(commit=False)
 			projectname = form.cleaned_data.get('projectname')
 			projdesc = form.cleaned_data.get('projdesc')
@@ -87,7 +90,8 @@ def project_create(request):
 			return render(request,'project_success.html')
 	else:
 		form = ProjectsForm()
-	return render(request, 'project_create.html', {'form': form})
+		task_form = TasksForm()
+	return render(request, 'project_create.html', {'form': form, 'task_form': task_form})
 
 class ProjectList(LoginRequiredMixin,ListView):
 	model = Project
@@ -102,10 +106,42 @@ class ProjectList(LoginRequiredMixin,ListView):
 class ProjectDetailView(LoginRequiredMixin,generic.DetailView):
 	model = Project
 	template_name = "project_detail.html"
-	
-class ProjectUpdate(LoginRequiredMixin, UpdateView):
-	model = Project
-	fields = '__all__'
+ 
+class ProjectUpdateView(FormView):
+	template_name = "project_update.html"
+	#Retrieve Project object from the <pk> value passed through the URL parameters
+	def get_object(self):
+		id = self.kwargs.get('pk')
+		obj = None
+		if id is not None:
+			obj = get_object_or_404(Project, projectid=id)
+		return obj
+	#Retrieve the ProjectsForm and TasksForm
+	def get(self, request, id=None, *args, **kwargs):
+		context = {}
+		obj = self.get_object()
+		if obj is not None:
+			form = ProjectsForm(instance=obj)
+			task_form = TasksForm()
+			context['object'] = obj
+			context['form'] = form
+			context['task_form'] = task_form
+		return render(request, self.template_name, context)
+
+	def post(self, request, id=None, *args, **kwargs):
+		context = {}
+		obj = self.get_object()
+		if obj is not None:
+			form = ProjectsForm(request.POST, instance=obj)
+			task_form = TasksForm()
+			if form.is_valid():
+				form.save()
+			context['object'] = obj
+			context['form'] = form
+			context['task_form'] = task_form
+		return render(request, self.template_name, context)
+
 class ProjectDelete(LoginRequiredMixin,DeleteView):
 	model = Project
-	success_url = reverse_lazy('projects')
+	success_url = reverse_lazy('dashboard')
+	success_message = "Project was deleted successfully!"
