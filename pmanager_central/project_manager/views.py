@@ -184,7 +184,35 @@ class ProjectUpdateView2(FormView):
 			context['task_form'] = task_form
 		return render(request, self.template_name, context)
 
-class ProjectDelete(LoginRequiredMixin,DeleteView):
-	model = Project
+class ProjectDelete(LoginRequiredMixin,View):
 	template_name = "project_delete.html"
 	success_message = "Project was deleted successfully!"
+ 
+	def get_object(self):
+		id = self.kwargs.get('pk')
+		obj = None
+		if id is not None:
+			obj = get_object_or_404(Project, projectid=id)
+		return obj
+
+	#Retrieve the object
+	def get(self, request, id=None, *args, **kwargs):
+		context = {}
+		obj = self.get_object()
+		if obj is not None:
+			form = ProjectsForm(instance=obj)
+			task_form = TasksForm()
+			context['project'] = obj
+		return render(request, self.template_name, context)
+
+	def post(self, request, id=None, *args, **kwargs):
+		context ={}
+		obj = self.get_object()
+		if obj is not None:
+			obj.delete()
+			context['project'] = None
+			messages.success(request, 'Project was deleted successfully')
+			return redirect('dashboard')	
+		return render(request, self.template_name, context)
+
+ 
