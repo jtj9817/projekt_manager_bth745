@@ -56,7 +56,7 @@ class Project(models.Model):
         auto_now=False, auto_now_add=False, null=False)
     proj_created_at = models.DateTimeField(auto_now_add=True)
     project_tasks = models.ForeignKey(
-        Task, on_delete=models.CASCADE)
+        Task, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.projectname

@@ -81,7 +81,7 @@ def project_create(request):
 	if request.method == 'POST':
 		form = ProjectsForm(request.POST)
 		task_form = TasksForm(request.POST)
-		if form.is_valid() & task_form.is_valid():
+		if form.is_valid():
 			project = form.save(commit=False)
 			projectname = form.cleaned_data.get('projectname')
 			projdesc = form.cleaned_data.get('projdesc')
@@ -186,5 +186,5 @@ class ProjectUpdateView2(FormView):
 
 class ProjectDelete(LoginRequiredMixin,DeleteView):
 	model = Project
-	success_url = reverse_lazy('dashboard')
+	template_name = "project_delete.html"
 	success_message = "Project was deleted successfully!"

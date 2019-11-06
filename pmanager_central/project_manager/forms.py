@@ -67,7 +67,20 @@ class ProjectsForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['projectname', 'projdesc', 'project_deadline']     
+        fields = ['projectname', 'projdesc', 'project_deadline']  
+        
+class ProjectDeleteForm(forms.ModelForm):
+    confirm = forms.CharField(label='Enter your name', max_length=50)
+    
+    class Meta:
+        model = Project
+        fields = []
+        
+    def clean(self):
+        confirm = super().clean().get('confirm')
+        if self.instance.name.lower() != confirm.lower():
+            raise forms.ValidationError('Confirmation incorrect')
+
         
 # Form for User profile and to be extended using the Profile model
 class UserCreationForm(forms.ModelForm):
