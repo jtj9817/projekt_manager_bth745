@@ -67,12 +67,9 @@ class ProjectsForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['projectname', 'projdesc',
-                  'project_deadline']
-
+        fields = ['projectname', 'projdesc', 'project_deadline']     
+        
 # Form for User profile and to be extended using the Profile model
-
-
 class UserCreationForm(forms.ModelForm):
     class Meta:
         model = User

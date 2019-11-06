@@ -1,114 +1,40 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-	<!-- Favicons -->
-	<link href="{% static 'img/favicon.png' %}" rel="icon">
-	<link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i"
-		rel="stylesheet">
-
-
-	<!-- Bootstrap CSS File -->
-	<link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-	<!-- Libraries CSS Files -->
-	<link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-	<link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
-	<link href="{% static 'lib/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
-
-	<!-- Main Stylesheet File -->
-	<link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-	<!-- JavaScript Libraries -->
-	<script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-	<script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
-	<script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-	<script src="{% static 'lib/easing/easing.min.js' %}"></script>
-	<script src="{% static 'lib/wow/wow.min.js' %}"></script>
-	<script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
-	<script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
-	<script src="{% static 'lib/magnific-popup/magnific-popup.min.js' %}"></script>
-	<script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
-
-	<!-- Template Main Javascript File -->
-	<script src="{% static 'js/main.js' %}"></script>
-
- 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
-	 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-
-</head>
-
+<title>Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Bootstrap CSS File -->
+<link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<!-- Main CSS file -->
+ <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
 <body>
-	<!--==========================
-    Header
-  ============================-->
-	<header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
-		<div class="w3-bar">
-			<div id="logo" class="pull-left">
-				<h1><a href="#intro" class="scrollto">Project Manager</a></h1>
-				<!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
-			</div>
-			<nav id="w3-bar">
-				<ul class="nav-menu">
-					<li class="menu-active"><a class="w3-bar-item w3-button" href="{% url 'index' %}">Home</a></li>
-					{% if user.is_authenticated %}
-					{% block empty %}{% endblock%}
-					{% else %}
-					<li class="{% block register_active %}{% endblock %}"><a class="w3-bar-item w3-button" href="{% url 'register' %}">Register</a>
-					</li>
-					<li class="{% block login_active %}{% endblock %}"><a class="w3-bar-item w3-button" href="{% url 'login' %}">Log In</a></li>
-					{% endif %}
-					<li><a  class="w3-bar-item w3-button" href="{% url 'dashboard' %}">Dashboard</a></li>
-					<li><a  class="w3-bar-item w3-button" href="{% url 'project-create' %}">Create Project</a></li>
-				</ul>
-				<ul class="nav-menu w3-right">
-				{% if user.is_authenticated %}
-					<li><a href="%" class="w3-bar-item w3-button w3-right">Welcome, {{ user.get_username }}</a></li>
-					{% csrf_token %}
-					<li><a class="w3-bar-item w3-button w3-right"
-							href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-				{% endif %}
-				</ul>
-			</nav><!-- #nav-menu-container -->
-		</div>
-	</header><!-- #header -->
+</head>
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+    <div class="w3-bar w3-white w3-card" id="myNavbar">
+        <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+      <!-- Right-sided navbar links -->
+      <div class="w3-right w3-hide-small">
+        <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+        <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My Projects</a>
+        <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create Project</a>
+        <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
+        <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Sign out</a>
+      </div>
+      <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </div>
+  </div><!--Navbar end-->
 	<div class="container-fluid" style="margin-top: 100px">
 		<div class="row">
 			<div class="col-md-4">
-				<dl>
-					<dt>
-						Description lists
-					</dt>
-					<dd>
-						A description list is perfect for defining terms.
-					</dd>
-					<dt>
-						Euismod
-					</dt>
-					<dd>
-						Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
-					</dd>
-					<dd>
-						Donec id elit non mi porta gravida at eget metus.
-					</dd>
-					<dt>
-						Malesuada porta
-					</dt>
-					<dd>
-						Etiam porta sem malesuada magna mollis euismod.
-					</dd>
-					<dt>
-						Felis euismod semper eget lacinia
-					</dt>
-					<dd>
-						Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
-						justo sit amet risus.
-					</dd>
-				</dl>
 			</div>
 			<div class="col-md-4">
 				<h2>My Projects</h2>
@@ -152,36 +78,7 @@
 
 				</table>
 			</div>
-			<div class="col-md-4">
-				<ol>
-					<li class="list-item">
-						Lorem ipsum dolor sit amet
-					</li>
-					<li class="list-item">
-						Consectetur adipiscing elit
-					</li>
-					<li class="list-item">
-						Integer molestie lorem at massa
-					</li>
-					<li class="list-item">
-						Facilisis in pretium nisl aliquet
-					</li>
-					<li class="list-item">
-						Nulla volutpat aliquam velit
-					</li>
-					<li class="list-item">
-						Faucibus porta lacus fringilla vel
-					</li>
-					<li class="list-item">
-						Aenean sit amet erat nunc
-					</li>
-					<li class="list-item">
-						Eget porttitor lorem
-					</li>
-				</ol>
-			</div>
 		</div>
 	</div>
 </body>
-
 </html>

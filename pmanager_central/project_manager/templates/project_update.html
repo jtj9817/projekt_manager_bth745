@@ -1,119 +1,136 @@
 {% load static %}
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Create Project</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
-    <!-- Favicons -->
-    <link href="{% static 'img/favicon.png' %}" rel="icon">
-    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i"
-        rel="stylesheet">
+    <title>Edit Project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS File -->
     <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- Libraries CSS Files -->
-    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
-    <link href="{% static 'lib/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
-    <!-- Main Stylesheet File -->
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <!-- JavaScript Libraries -->
+    <!-- Main CSS file -->
+    <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
+    <!-- Javascript Libraries -->
     <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
     <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
-    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
-    <script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
-    <script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
-    <script src="{% static 'lib/magnific-popup/magnific-popup.min.js' %}"></script>
-    <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
-    <!-- Template Main Javascript File -->
-    <script src="{% static 'js/main.js' %}"></script>
 
-     	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
-	 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-</head>
+<body>
+    </head>
 
-<body style="background: gray">
-	<!--==========================
-    Header
-  ============================-->
-	<header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
-		<div class="w3-bar">
-			<div id="logo" class="pull-left">
-				<h1><a href="#intro" class="scrollto">Project Manager</a></h1>
-				<!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
-			</div>
-			<nav id="w3-bar">
-				<ul class="nav-menu">
-					<li class="menu-active"><a class="w3-bar-item w3-button" href="{% url 'index' %}">Home</a></li>
-					{% if user.is_authenticated %}
-					{% block empty %}{% endblock%}
-					{% else %}
-					<li class="{% block register_active %}{% endblock %}"><a class="w3-bar-item w3-button" href="{% url 'register' %}">Register</a>
-					</li>
-					<li class="{% block login_active %}{% endblock %}"><a class="w3-bar-item w3-button" href="{% url 'login' %}">Log In</a></li>
-					{% endif %}
-					<li><a  class="w3-bar-item w3-button" href="{% url 'dashboard' %}">Dashboard</a></li>
-					<li><a  class="w3-bar-item w3-button" href="{% url 'project-create' %}">Create Project</a></li>
-				</ul>
-				<ul class="nav-menu w3-right">
-				{% if user.is_authenticated %}
-					<li><a href="%" class="w3-bar-item w3-button w3-right">Welcome, {{ user.get_username }}</a></li>
-					{% csrf_token %}
-					<li><a class="w3-bar-item w3-button w3-right"
-							href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-				{% endif %}
-				</ul>
-			</nav><!-- #nav-menu-container -->
-		</div>
-	</header><!-- #header -->
-    <div class="container" style="margin-top: 110px">
-        <div class="card bg-light">
-            <article class="card-body mx-auto" style="max-width: 400px;">
-                <h4 class="card-title mt-3 text-center">Edit Project Details</h4>
-                <form>
-                    <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form.media }}
-                        {{ form | crispy }}
-                        <h4>Tasks <a href="bannerformodal" data-toggle= "modal" data-target="#taskModal"><i class="fas fa-plus w3-button"></i></a></h4>
-                        <!-- {{ task_form | crispy }} -->
-                        <button type="submit" formmethod="post" class="btn btn-primary btn-block"> Save Changes
+    <body>
+        <!-- Navbar (sit on top) -->
+        <div class="w3-top">
+            <div class="w3-bar w3-white w3-card" id="myNavbar">
+                <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+                <!-- Right-sided navbar links -->
+                <div class="w3-right w3-hide-small">
+                    <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+                    <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My
+                        Projects</a>
+                    <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create
+                        Project</a>
+                    <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
+                    <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i
+                            class="fa fa-sign-out"></i> Sign out</a>
+                </div>
+                <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+                <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                    onclick="w3_open()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <!--Navbar end-->
+        <div class="container-fluid" style="margin-top: 110px">
+            <!--Container -->
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="col-md-12 alert alert-success alert-dismissible fade show">{{ message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button></div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="card">
+                        <h5 class="card-header">
+                            Edit Project Deadline and Tasks
+                        </h5>
+                        <div class="card-body text-center">
+                            <form class="form-horizontal" role="form" action="" method="POST"
+                                enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.media }}
+                                {{ form.projectname  }}
+                                {{ form.projdesc  | as_crispy_field}}
+                                {{ form.project_deadline.as_hidden  }}
+                                <div class="w3-bar">
+                                    <div class="w3-bar-item"><button type="submit" formmethod="post"
+                                            class="btn btn-primary"> Save Changes
+                                        </button></div>
+                                    <div class="w3-bar-item"><button class="btn btn-info"><a
+                                                href="{% url 'project-update-second' projectid %}" style="color: white">Update Project
+                                                Deadline and Tasks</a></button></div>
+                                    <div class="w3-bar-item w3-right"><button class="btn"><a
+                                                href="{% url 'dashboard' %}">Cancel</a></button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <h5 class="card-header">
+                            Project Details
+                        </h5>
+                        <div class="card-body text-center">
+                            <p class="card-text">
+                                <h2>Project Name:</h2>
+                                <h3 class="card-title mt-3">{{ project.projectname }}</h3>
+                                <h5>Project Created: </h5>
+                                <p>{{ project.proj_created_at }}<p>
+                                        <h5>Project Description</h5>
+                                        <p>{{ project.projdesc }}</P>
+                                        <h5>Project Deadline</h5>
+                                        <p>{{ project.project_deadline }}</p>
+                                        <!--<h5>Project Members</h5> -->
+                                        <!--<h5>Project Tasks</h5> -->
+                                    </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Container End-->
+        <!-- Modal -->
+        <div class="modal fade bannerformodal" id="taskModal" tabindex="-1" role="dialog"
+            aria-labelledby="taskModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-                    </form>
-                </form>
-            </article>
-        </div> <!-- card.// -->
-    </div>
-    <!--container end.//-->
+                    </div>
+                    <div class="modal-body">
+                        <!-- {{ task_form | crispy }} -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 
-<!-- Modal -->
-<div class="modal fade bannerformodal" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      {{ task_form | crispy }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-</body>
-</html>
+    </html>

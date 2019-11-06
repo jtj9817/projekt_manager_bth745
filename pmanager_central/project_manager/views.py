@@ -123,7 +123,45 @@ class ProjectUpdateView(FormView):
 		if obj is not None:
 			form = ProjectsForm(instance=obj)
 			task_form = TasksForm()
-			context['object'] = obj
+			context['project'] = obj
+			context['form'] = form
+			context['projectid'] = obj.projectid
+		return render(request, self.template_name, context)
+
+	def post(self, request, id=None, *args, **kwargs):
+		context = {}
+		obj = self.get_object()
+		if obj is not None:
+			form = ProjectsForm(request.POST, instance=obj)
+			if form.is_valid():
+				project = form.save(commit=False)
+				projectname = form.cleaned_data.get('projectname')
+				projdesc = form.cleaned_data.get('projdesc')
+				project_deadline = form.cleaned_data.get('project_deadline')
+				project.save()
+				messages.success(request, 'Project was edited successfully')
+			context['project'] = obj
+			context['form'] = form
+			context['projectid'] = obj.projectid
+		return render(request, self.template_name, context)
+
+class ProjectUpdateView2(FormView):
+	template_name = "project_update_second.html"
+	#Retrieve Project object from the <pk> value passed through the URL parameters
+	def get_object(self):
+		id = self.kwargs.get('pk')
+		obj = None
+		if id is not None:
+			obj = get_object_or_404(Project, projectid=id)
+		return obj
+	#Retrieve the ProjectsForm and TasksForm
+	def get(self, request, id=None, *args, **kwargs):
+		context = {}
+		obj = self.get_object()
+		if obj is not None:
+			form = ProjectsForm(instance=obj)
+			task_form = TasksForm()
+			context['project'] = obj
 			context['form'] = form
 			context['task_form'] = task_form
 		return render(request, self.template_name, context)
@@ -135,8 +173,13 @@ class ProjectUpdateView(FormView):
 			form = ProjectsForm(request.POST, instance=obj)
 			task_form = TasksForm()
 			if form.is_valid():
-				form.save()
-			context['object'] = obj
+				project = form.save(commit=False)
+				projectname = form.cleaned_data.get('projectname')
+				projdesc = form.cleaned_data.get('projdesc')
+				project_deadline = form.cleaned_data.get('project_deadline')
+				project.save()
+				messages.success(request, 'Project was edited successfully')
+			context['project'] = obj	
 			context['form'] = form
 			context['task_form'] = task_form
 		return render(request, self.template_name, context)

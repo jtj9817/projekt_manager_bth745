@@ -1,0 +1,135 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+
+<head>
+    <title>Edit Project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS File -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Main CSS file -->
+    <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
+    <!-- Javascript Libraries -->
+    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+    <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<body>
+    </head>
+
+    <body>
+        <!-- Navbar (sit on top) -->
+        <div class="w3-top">
+            <div class="w3-bar w3-white w3-card" id="myNavbar">
+                <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+                <!-- Right-sided navbar links -->
+                <div class="w3-right w3-hide-small">
+                    <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+                    <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My
+                        Projects</a>
+                    <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create
+                        Project</a>
+                    <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
+                    <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i
+                            class="fa fa-sign-out"></i> Sign out</a>
+                </div>
+                <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+                <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+                    onclick="w3_open()">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <!--Navbar end-->
+        <div style="margin-top: 110px">
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                         {% if messages %}
+                        {% for message in messages %}
+                        <div class="col-md-12 alert alert-success alert-dismissible fade show">{{ message}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button></div>
+                        {% endfor %}
+                        {% endif %}
+                        <div class="card">
+                            <h5 class="card-header">
+                                Edit Project Deadline and Tasks
+                            </h5>
+                            <div class="card-body text-center">
+                                <form class="form-horizontal" role="form" action="" method="POST"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {{ form.media }}
+                                    {{ form.projectname.as_hidden }}
+                                    {{ form.projdesc.as_hidden  }}
+                                    {{ form.project_deadline | as_crispy_field }}
+                                    <h4>Tasks <a href="bannerformodal" data-toggle="modal" data-target="#taskModal"><i
+                                                class="fas fa-plus w3-button"></i></a></h4>
+                                    <div class="w3-bar">
+                                        <div class="w3-bar-item"><button type="submit" formmethod="post"
+                                                class="btn btn-primary"> Save Changes
+                                            </button></div>
+                                        <div class="w3-bar-item w3-right"><button class="btn"><a
+                                                    href="{% url 'dashboard' %}">Cancel</a></button></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <h5 class="card-header">
+                                Project Details
+                            </h5>
+                            <div class="card-body text-center">
+                                <p class="card-text">
+                                    <h2>Project Name:</h2>
+                                    <h3 class="card-title mt-3">{{ project.projectname }}</h3>
+                                    <h5>Project Created: </h5>
+                                    <p>{{ project.proj_created_at }}<p>
+                                            <h5>Project Description</h5>
+                                            <p>{{ project.projdesc }}</P>
+                                            <h5>Project Deadline</h5>
+                                            <p>{{ project.project_deadline }}</p>
+                                            <!--<h5>Project Members</h5> -->
+                                            <!--<h5>Project Tasks</h5> -->
+                                        </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--container end.//-->
+
+            <!-- Modal -->
+            <div class="modal fade bannerformodal" id="taskModal" tabindex="-1" role="dialog"
+                aria-labelledby="taskModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {{ task_form | crispy }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </body>
+
+    </html>
