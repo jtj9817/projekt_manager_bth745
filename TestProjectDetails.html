@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>BTH745Assignment</title>
@@ -9,13 +8,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <style>
-        .createanew {
+        label {
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        .project {
             font-size: 70px;
             color: black;
             font-style: oblique;
         }
 
-        .project {
+        .Details {
             font-size: 90px;
             color: #4950AE;
             font-style: italic;
@@ -100,69 +104,88 @@
 
     <section>
         <div class="row margins">
-            <div class="col-5" style="padding-left:0px;padding-right:0px;background-color: lightgray; margin-bottom:-230px;">
-                <h2 class="text-center createanew" style="padding-top: 150px;">
-                    Create a New
+            <div class="col-5" style="padding-left:0px;padding-right:0px;background-color: lightgray;margin-bottom:-165px;">
+                <h2 class="text-center project" style="padding-top: 150px;">
+                    Project
                 </h2>
-                <p class="text-center project">Project!</p>
-                
+                <p class="text-center Details">Details!</p>
+
             </div>
-            <div class="col-7" style="margin-top:70px;">
+            <div class="col-7">
                 <form>
                     <div class="form-group">
                         <label for="exampleInputName1">Name*</label>
-                        <input type="text" class="form-control" id="exampleInputName" aria-describedby="nameHelp" placeholder="Enter name" autofocus>
+                        <p>Test</p>
+                        <!--<input type="text" class="form-control" id="exampleInputName" aria-describedby="nameHelp" placeholder="Enter name" autofocus>-->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputUsername1">Description*</label>
-                        <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Description">
+                        <p>
+                            vbnbvjgvbcyuionkbjhvbhj;lkjhhjknjvbnlhg
+                        </p>
+                        <!-- <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Description">-->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Task Name*</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Task Name">
+                        <p>testing</p>
+                        <!--<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Task Name">-->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Task Priority*</label>
-                        <select style="margin-top:-130px; height:30px; font-size:20px;">
-                            <option value="low">
-                                Low
-                            </option>
-                            <option value="low-medium">
-                                Low-Medium
-                            </option>
-                            <option value="medium">
-                                Medium
-                            </option>
-                            <option value="medium-high">
-                                Medium-High
-                            </option>
-                            <option value="high">
-                                High
-                            </option>
-                        </select>
+                        <p>Low</p>
+                        <!--<select style="margin-top:-130px; height:30px; font-size:20px;">
+
+                        <option value="low">
+                            Low
+                        </option>-->
+                        <!--<option value="low-medium">
+                            Low-Medium
+                        </option>
+                        <option value="medium">
+                            Medium
+                        </option>
+                        <option value="medium-high">
+                            Medium-High
+                        </option>
+                        <option value="high">
+                            High
+                        </option>-->
+                        <!--</select>-->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputConfirmPassword1">Task Description</label>
-                        <input type="password" class="form-control" id="exampleInputConfirmPassword1" placeholder="Task Description">
+                        <p>
+                            xfguljbvcgvchuyguhkjhv
+                        </p>
+                        <!--<input type="password" class="form-control" id="exampleInputConfirmPassword1" placeholder="Task Description">-->
                     </div>
                     <div class="form-group">
                         <label for="exampleInputConfirmPassword1">Project Deadline*</label>
-                        <input type="date" class="form-control" id="exampleInputConfirmPassword1" placeholder="enter date">
+                        <p>2020-01-15</p>
+                        <!--<input type="date" class="form-control" id="exampleInputConfirmPassword1" placeholder="enter date">-->
                     </div>
 
                     <!--<button class="btn btn-primary" style="background-color:blue;color:white">-->
-                    <a href="./ProjectDashboard.html" class="btn btn-primary" style="background-color:blue;color:white">Create Project</a>
+                    <a href="./EditProjectName.html" class="btn btn-primary" style="color:white">Edit </a>
                     <!--</button>-->
 
-                    <a href="./index.html" class="btn btn-primary" style="background-color:lightgrey;color:black;">
-                        Cancel
+                    <!--<a href="./index.html" class="btn btn-primary" style="background-color:lightgrey;color:black;">
+                        Go Back
+
+                    </a>-->
+                    <a href="./ProjectDashboard1.html" class="btn btn-danger" style="color:black;">
+                        Delete
 
                         <!--    <button class="btn btn-primary" style="background-color:lightgrey;color:black;">Cancel</button>-->
                     </a>
-                    <a href="./ProjectDashboard.html" class="btn btn-primary" style="background-color:lightgrey;color:black;">
-                        List All Projects
-                        <!--<button class="btn btn-primary" style="background-color:lightgrey;color:black;">Register</button>-->
-                    </a>
+                    <!--<a href="./DeleteProjectName.html" class="btn btn-danger" style="color:black;">
+                        Delete-->
+                    <!--    <button class="btn btn-primary" style="background-color:lightgrey;color:black;">Cancel</button>-->
+                    <!--</a>-->
+                    <!--<a href="./ProjectDashboard.html" class="btn btn-primary" style="background-color:lightgrey;color:black;">
+                    List all Projects!-->
+                    <!--<button class="btn btn-primary" style="background-color:lightgrey;color:black;">Register</button>-->
+                    <!--</a>-->
 
                 </form>
             </div>

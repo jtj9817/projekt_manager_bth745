@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <title>BTH745Assignment</title>
@@ -9,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <style>
-        .createanew {
+        .edit {
             font-size: 70px;
             color: black;
             font-style: oblique;
@@ -100,14 +99,14 @@
 
     <section>
         <div class="row margins">
-            <div class="col-5" style="padding-left:0px;padding-right:0px;background-color: lightgray; margin-bottom:-230px;">
-                <h2 class="text-center createanew" style="padding-top: 150px;">
-                    Create a New
+            <div class="col-5" style="padding-left:0px;padding-right:0px;background-color: lightgray;">
+                <h2 class="text-center edit" style="padding-top: 150px;">
+                    Delete 
                 </h2>
                 <p class="text-center project">Project!</p>
-                
+
             </div>
-            <div class="col-7" style="margin-top:70px;">
+            <div class="col-7">
                 <form>
                     <div class="form-group">
                         <label for="exampleInputName1">Name*</label>
@@ -118,51 +117,31 @@
                         <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="usernameHelp" placeholder="Description">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Task Name*</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Task Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Task Priority*</label>
-                        <select style="margin-top:-130px; height:30px; font-size:20px;">
-                            <option value="low">
-                                Low
-                            </option>
-                            <option value="low-medium">
-                                Low-Medium
-                            </option>
-                            <option value="medium">
-                                Medium
-                            </option>
-                            <option value="medium-high">
-                                Medium-High
-                            </option>
-                            <option value="high">
-                                High
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputConfirmPassword1">Task Description</label>
-                        <input type="password" class="form-control" id="exampleInputConfirmPassword1" placeholder="Task Description">
-                    </div>
-                    <div class="form-group">
                         <label for="exampleInputConfirmPassword1">Project Deadline*</label>
                         <input type="date" class="form-control" id="exampleInputConfirmPassword1" placeholder="enter date">
                     </div>
 
-                    <!--<button class="btn btn-primary" style="background-color:blue;color:white">-->
-                    <a href="./ProjectDashboard.html" class="btn btn-primary" style="background-color:blue;color:white">Create Project</a>
-                    <!--</button>-->
+
 
                     <a href="./index.html" class="btn btn-primary" style="background-color:lightgrey;color:black;">
                         Cancel
 
                         <!--    <button class="btn btn-primary" style="background-color:lightgrey;color:black;">Cancel</button>-->
                     </a>
-                    <a href="./ProjectDashboard.html" class="btn btn-primary" style="background-color:lightgrey;color:black;">
-                        List All Projects
-                        <!--<button class="btn btn-primary" style="background-color:lightgrey;color:black;">Register</button>-->
+                    <!--<a href="./ProjectDashboard.html" class="btn btn-danger" style="color:black;">
+                        Delete-->
+
+                        <!--    <button class="btn btn-primary" style="background-color:lightgrey;color:black;">Cancel</button>-->
+                    <!--</a>-->
+                    <a href="./DeleteProjectTasks.html" class="btn btn-danger" style="color:White;">
+                        Delete Project Tasks!
+
+                        <!--    <button class="btn btn-primary" style="background-color:lightgrey;color:black;">Cancel</button>-->
                     </a>
+                    <!--<a href="./ProjectDashboard.html" class="btn btn-primary" style="background-color:lightgrey;color:black;">
+    List all Projects!-->
+                    <!--<button class="btn btn-primary" style="background-color:lightgrey;color:black;">Register</button>-->
+                    <!--</a>-->
 
                 </form>
             </div>
