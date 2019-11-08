@@ -3,61 +3,84 @@
 <html lang="en">
 
 <head>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- Bootstrap CSS File -->
-<link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-<!-- Main CSS file -->
- <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
-     <!-- Javascript Libraries -->
-    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
-    <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <title>Project Details</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Bootstrap CSS File -->
+  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Main CSS file -->
+  <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
+  <!-- Javascript Libraries -->
+  <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+  <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
 <body>
-</head>
-<body>
- <!-- Navbar (sit on top) -->
-<div class="w3-top">
-    <div class="w3-bar w3-white w3-card" id="myNavbar">
+  </head>
+
+  <body>
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-white w3-card" id="myNavbar">
         <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
-      <!-- Right-sided navbar links -->
-      <div class="w3-right w3-hide-small">
-        <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-        <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My Projects</a>
-        <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create Project</a>
-        <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
-        <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Sign out</a>
+        <!-- Right-sided navbar links -->
+        <div class="w3-right w3-hide-small">
+          <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+          <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My Projects</a>
+          <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create
+            Project</a>
+          <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
+          <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i>
+            Sign out</a>
+        </div>
+        <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+          onclick="w3_open()">
+          <i class="fa fa-bars"></i>
+        </a>
       </div>
-      <!-- Hide right-floated links on small screens and replace them with a menu icon -->
-      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
-        <i class="fa fa-bars"></i>
-      </a>
     </div>
-  </div><!--Navbar end-->
-  <div style="margin-top: 110px">
-        <div class="card bg-light">
-            <article class="card-body mx-auto text-center" style="max-width: 400px;">
-                <h3 class="card-title mt-3 text-center">{{ project.projectname }}</h3>
-                <h5>Project Created: </h5>
-                <p>{{ obj.proj_created_at }}<p>
-                <h5>Project Description</h5>
-                <p>{{ obj.projdesc }}</P>
-                <h5>Project Deadline</h5>
-                <p>{{ obj.project_deadline }}</p>
-                <!--<h5>Project Members</h5>-->
-                <!--<h5>Project Tasks</h5>-->
-                <a href="{% url 'project-update' project.projectid %}"><button type="button" class="btn btn-primary">Edit</button></a>
-								<a href="{% url 'project-delete' project.projectid %}"><button type="button" class="btn btn-warning">Delete</button></a>
-                <a href="{% url 'dashboard' %}"><button type="button" class="btn btn-info">Back to Projects List</button></a>
-            </article>
-        </div> <!-- card.// -->
+    <!--Navbar end-->
+    <div style="margin-top: 110px">
+      <div class="row">
+        <div class="col-md-4">
+          <ul>
+            {% for task in tasks %}
+              <h5 class="w3-green">{{ task.task_name}} </h5>
+                <h5>Task Description</h5>
+                {{ task.task_description }}
+                <h5>Task Priority</h5>
+                {{ task.get_task_priority_display }}
+                <h5>Task Performer</h5>
+                {{ task.task_performer }}
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <div class="card bg-light">
+            <h5 class="card-header">
+              Project Details
+            </h5>
+            <div class="card-body text-center">
+              <h2 class="card-title mt-3">{{ project.projectname }}</h2>
+              <h5>Project Created: </h5>
+              <p>{{ project.proj_created_at }}</p>
+              <h5>Project Description</h5>
+              <p>{{ project.projdesc }}</P>
+              <h5>Project Deadline</h5>
+              <p>{{ project.project_deadline }}</p>
+              <!--<h5>Project Members</h5> -->
+              <!--<h5>Project Tasks</h5> -->
+            </div>
+          </div> <!-- card.// -->
+        </div>
+      </div>
     </div>
     <!--container end.//-->
 
-</body>
+  </body>
 
 </html>

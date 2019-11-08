@@ -19,51 +19,61 @@
   <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
   <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
+</head>
 
 <body>
-  </head>
-
-  <body>
-    <!-- Navbar (sit on top) -->
-    <div class="w3-top">
-      <div class="w3-bar w3-white w3-card" id="myNavbar">
-        <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
-        <!-- Right-sided navbar links -->
-        <div class="w3-right w3-hide-small">
-          <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-          <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My Projects</a>
-          <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create
-            Project</a>
-          <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
-          <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i>
-            Sign out</a>
-        </div>
-        <!-- Hide right-floated links on small screens and replace them with a menu icon -->
-        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
-          onclick="w3_open()">
-          <i class="fa fa-bars"></i>
-        </a>
+  <!-- Navbar (sit on top) -->
+  <div class="w3-top">
+    <div class="w3-bar w3-white w3-card" id="myNavbar">
+      <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+      <!-- Right-sided navbar links -->
+      <div class="w3-right w3-hide-small">
+        <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+        <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My Projects</a>
+        <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create
+          Project</a>
+        <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
+        <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i>
+          Sign out</a>
       </div>
+      <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+        onclick="w3_open()">
+        <i class="fa fa-bars"></i>
+      </a>
     </div>
-    <!--Navbar end-->
-    <div style="margin-top: 110px">
-      <div class="card bg-light">
-        <article class="card-body mx-auto" style="max-width: 400px;">
-          <h4 class="card-title mt-3 text-center">Create The Project!</h4>
-          <form>
-            <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
+  </div>
+  <!--Navbar end-->
+  <div style="margin-top: 110px">
+    <div class="row">
+      <div class="col-md-4">
+      </div>
+      
+        <div class="col-md-4">
+          <div class="card">
+            <h4 class="card-header text-center">Create The Project!</h4>
+            <div class="card-body">
+              <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
               {% csrf_token %}
               {{ form.media }}
               {{ form | crispy }}
-              <h4>Tasks <a href="bannerformodal" data-toggle="modal" data-target="#taskModal"><i
-                    class="fas fa-plus w3-button"></i></a></h4>
-              <!-- {{ task_form | crispy }} -->
               <button type="submit" formmethod="post" class="btn btn-primary btn-block"> Create Project
               </button>
-            </form>
-          </form>
-        </article>
-      </div> <!-- card.// -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card">
+            <h4 class="card-header text-center">Project Tasks</h4>
+            <div class="card-body">
+              {{ task_form | crispy }}
+            </div>
+          </div>
+          
+        </div>
+      </form>
+
     </div>
     <!--container end.//-->
 
@@ -88,6 +98,6 @@
         </div>
       </div>
     </div>
-  </body>
+</body>
 
 </html>

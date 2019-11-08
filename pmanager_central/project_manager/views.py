@@ -6,13 +6,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.views.generic import DetailView, View, CreateView, UpdateView, DeleteView, ListView
 from django.views.generic.edit import FormView
-from .models import Project, Organization, Profile
+from .models import Project, Organization, Profile, Task
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy, resolve
 from django.utils.decorators import method_decorator
 from django.db import transaction
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -42,7 +43,8 @@ def register(request):
 			user= form.save(commit=False)
 			username = form.cleaned_data.get('username')
 			password = form.cleaned_data.get('password')
-			full_name = form.cleaned_data.get('full_name')
+			first_name = form.cleaned_data.get('first_name')
+			last_name = form.cleaned_data.get('last_name')
 			user.set_password(password)
 			user.save()
 			user = authenticate(username=username, password=password)
@@ -81,12 +83,20 @@ def project_create(request):
 	if request.method == 'POST':
 		form = ProjectsForm(request.POST)
 		task_form = TasksForm(request.POST)
-		if form.is_valid():
+		if form.is_valid() and task_form.is_valid():
 			project = form.save(commit=False)
 			projectname = form.cleaned_data.get('projectname')
 			projdesc = form.cleaned_data.get('projdesc')
 			project_deadline = form.cleaned_data.get('project_deadline')
-			project.save()
+			latest_proj = Project.objects.create(projectname=projectname, projdesc=projdesc, project_deadline=project_deadline)
+			#Task object
+			task = task_form.save(commit=False)
+			task_name = task_form.cleaned_data.get('task_name')
+			task_description = task_form.cleaned_data.get('task_description')
+			task_priority = task_form.cleaned_data.get('task_priority')
+			task_performer = task_form.cleaned_data.get('task_performer')
+			task.project = latest_proj
+			task.save()
 			return render(request,'project_success.html')
 	else:
 		form = ProjectsForm()
@@ -103,9 +113,20 @@ class ProjectList(LoginRequiredMixin,ListView):
 		context['project_list'] = Project.objects.all()
 		return context
 
-class ProjectDetailView(LoginRequiredMixin,generic.DetailView):
-	model = Project
-	template_name = "project_detail.html"
+@login_required
+def project_details(request, pk):
+	template_name ="project_detail.html"
+	obj = get_object_or_404(Project, projectid=pk)
+	context = {}
+	tasks = Task.objects.filter(project__projectid=pk)
+	if obj is not None:
+		context['project'] = obj
+		context['tasks'] = tasks
+	return render(request, template_name, context)
+
+#class ProjectDetailView(LoginRequiredMixin,generic.DetailView):
+#	model = Project
+#	template_name = "project_detail.html"
  
 class ProjectUpdateView(FormView):
 	template_name = "project_update.html"
@@ -158,12 +179,14 @@ class ProjectUpdateView2(FormView):
 	def get(self, request, id=None, *args, **kwargs):
 		context = {}
 		obj = self.get_object()
+		task_obj = Task.objects.filter(project__projectid=obj.projectid)
 		if obj is not None:
 			form = ProjectsForm(instance=obj)
 			task_form = TasksForm()
 			context['project'] = obj
 			context['form'] = form
 			context['task_form'] = task_form
+			context['tasks'] = task_obj
 		return render(request, self.template_name, context)
 
 	def post(self, request, id=None, *args, **kwargs):
@@ -172,12 +195,14 @@ class ProjectUpdateView2(FormView):
 		if obj is not None:
 			form = ProjectsForm(request.POST, instance=obj)
 			task_form = TasksForm()
-			if form.is_valid():
+			if form.is_valid() and task_form.is_valid():
 				project = form.save(commit=False)
 				projectname = form.cleaned_data.get('projectname')
 				projdesc = form.cleaned_data.get('projdesc')
 				project_deadline = form.cleaned_data.get('project_deadline')
 				project.save()
+				task = task_form.save(commit=False)
+
 				messages.success(request, 'Project was edited successfully')
 			context['project'] = obj	
 			context['form'] = form
@@ -211,7 +236,6 @@ class ProjectDelete(LoginRequiredMixin,View):
 		if obj is not None:
 			obj.delete()
 			context['project'] = None
-			messages.success(request, 'Project was deleted successfully')
 			return redirect('dashboard')	
 		return render(request, self.template_name, context)
 

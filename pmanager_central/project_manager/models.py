@@ -30,6 +30,25 @@ class Organization(models.Model):
         return reverse('volunto:organization-detail', args=(self.orgid,))
 
 
+
+
+class Project(models.Model):
+    projectname = models.CharField("Project Name", max_length=200)
+    projdesc = models.CharField("Project Description", max_length=500)
+    projectid = models.AutoField(primary_key=True)
+    projstatus = models.BooleanField("Project Status", default=False)
+    project_deadline = models.DateTimeField(
+        auto_now=False, auto_now_add=False, null=False)
+    proj_created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.projectname
+
+    def get_absolute_url(self):
+        # Returns a URL for accessing a Project object instance
+        return reverse('project-detail', args=[str(self.projectid)])
+
+
 class Task(models.Model):
     taskid = models.AutoField(primary_key=True)
     task_name = models.CharField(max_length=128)
@@ -42,29 +61,15 @@ class Task(models.Model):
     task_priority = models.PositiveIntegerField("Task Priority",
         choices=TASK_PRIORITY, default=1)
     task_performer = models.ForeignKey(User,default=1, on_delete=models.CASCADE)
-
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
     def __str__(self):
         return (self.task_name)
-
-
-class Project(models.Model):
-    projectname = models.CharField("Project Name", max_length=200)
-    projdesc = models.CharField("Project Description", max_length=500)
-    projectid = models.AutoField(primary_key=True)
-    projstatus = models.BooleanField("Project Status", default=False)
-    project_deadline = models.DateTimeField(
-        auto_now=False, auto_now_add=False, null=False)
-    proj_created_at = models.DateTimeField(auto_now_add=True)
-    project_tasks = models.ForeignKey(
-        Task, on_delete=models.CASCADE, default=1)
-
-    def __str__(self):
-        return self.projectname
-
-    def get_absolute_url(self):
-        # Returns a URL for accessing a Project object instance
-        return reverse('project-detail', args=[str(self.projectid)])
-
+    
+#class Team(models.Model):
+#   member = models.ForeignKey(User, on_delete=models.CASCADE)
+#  project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
+    
+    
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=30, unique=True,
@@ -82,7 +87,6 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return reverse('dj-auth:profile')
         # Methods to create and update Profile once a User was created
-
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
