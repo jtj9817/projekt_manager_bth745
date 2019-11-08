@@ -14,6 +14,8 @@ from django.db import transaction
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.http import JsonResponse
+from django.forms import formset_factory, inlineformset_factory
+
 
 # Create your views here.
 def index(request):
@@ -168,53 +170,27 @@ class ProjectUpdateView(FormView):
 			context['projectid'] = obj.projectid
 		return render(request, self.template_name, context)
 
-class ProjectUpdateView2(FormView):
+@login_required
+@transaction.atomic
+def ProjectUpdateView2(request,pk):
 	template_name = "project_update_second.html"
-	#Retrieve Project object from the <pk> value passed through the URL parameters
-	def get_object(self):
-		id = self.kwargs.get('pk')
-		obj = None
-		if id is not None:
-			obj = get_object_or_404(Project, projectid=id)
-		return obj
-	#Retrieve the ProjectsForm and TasksForm
-	def get(self, request, id=None, *args, **kwargs):
-		context = {}
-		obj = self.get_object()
-		task_obj = Task.objects.filter(project__projectid=obj.projectid)
-		if obj is not None:
-			form = ProjectsForm(instance=obj)
-			task_form = TasksForm()
-			context['project'] = obj
-			context['form'] = form
-			context['task_form'] = task_form
-			context['tasks'] = task_obj
-		return render(request, self.template_name, context)
-
-	def post(self, request, id=None, *args, **kwargs):
-		context = {}
-		obj = self.get_object()
-		if obj is not None:
-			form = ProjectsForm(request.POST, instance=obj)
-			task_form = TasksForm()
-			if form.is_valid() and task_form.is_valid():
-				project = form.save(commit=False)
-				projectname = form.cleaned_data.get('projectname')
-				projdesc = form.cleaned_data.get('projdesc')
-				project_deadline = form.cleaned_data.get('project_deadline')
-				project.save()
-				task = task_form.save(commit=False)
-
-				messages.success(request, 'Project was edited successfully')
-			context['project'] = obj	
-			context['form'] = form
-			context['task_form'] = task_form
-		return render(request, self.template_name, context)
+	TaskInlineFormSet = inlineformset_factory(Project, Task, fields=('task_name', 
+            'task_description','task_priority', 'task_performer'))
+	project = Project.objects.get(projectid=pk)
+	if request.method == "POST":
+		formset = TaskInlineFormSet(request.POST, request.FILES, instance=project)
+		if formset.is_valid():
+			formset.save()
+			return redirect('dashboard')
+	else:
+		formset = TaskInlineFormSet(instance=project)
+	return render(request, 'project_update_second.html', {'formset':formset, 'project':project})
 
 class ProjectDelete(LoginRequiredMixin,View):
 	template_name = "project_delete.html"
 	success_message = "Project was deleted successfully!"
- 
+
+
 	def get_object(self):
 		id = self.kwargs.get('pk')
 		obj = None

@@ -5,7 +5,7 @@ from .models import Project, Organization, Profile, Task
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from flatpickr import DateTimePickerInput
-from django.forms import formset_factory
+from django.forms import formset_factory, inlineformset_factory
 
 class UserForm(forms.ModelForm):
     username = forms.CharField(max_length=30, min_length=5, widget=forms.TextInput(
@@ -66,7 +66,6 @@ class TasksForm(forms.ModelForm):
         model = Task
         fields = ['task_name', 'task_description', 'task_priority', 'task_performer']
     
-TaskFormSet = formset_factory(TasksForm,extra=1)
 
 class ProjectsForm(forms.ModelForm):
     projectname = forms.CharField(label='Project Name', max_length=30, min_length=5, widget=forms.TextInput(

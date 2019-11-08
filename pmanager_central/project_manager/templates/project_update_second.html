@@ -75,23 +75,11 @@
                     </h5>
                     <div class="card-body text-center">
                         <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
+                            {{ formset.management_form }}
                             {% csrf_token %}
-                            <div>
-                                <ul>
-                                    {% for task in tasks %}
-                                    <div class="row">
-                                    </div>
-                                    <h5 class="w3-green">{{ task.task_name}} </h5>
-                                    <h5>Task Description</h5>
-                                    {{ task.task_description }}
-                                    <h5>Task Priority</h5>
-                                    {{ task.get_task_priority_display }}
-                                    <h5>Task Performer</h5>
-                                    {{ task.task_performer }}
-                                    
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                            {% for form in formset %}
+                                {{ form | crispy }}
+                            {% endfor %}
                             <div class="w3-bar">
                                 <div class="w3-bar-item"><button type="submit" formmethod="post"
                                         class="btn btn-primary"> Save Changes

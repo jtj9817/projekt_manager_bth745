@@ -11,7 +11,7 @@ urlpatterns = [
     #path('project/<int:pk>', views.ProjectDetailView.as_view(), name='project-detail'),
     path('project/<int:pk>', views.project_details, name='project-detail'),
     path('project/<int:pk>/update/', views.ProjectUpdateView.as_view(), name='project-update'),
-    path('project/<int:pk>/update/second', views.ProjectUpdateView2.as_view(), name='project-update-second'),
+    path('project/<int:pk>/update/second', views.ProjectUpdateView2, name='project-update-second'),
     path('project/<int:pk>/delete/', views.ProjectDelete.as_view(), name='project-delete')
 ]
 
