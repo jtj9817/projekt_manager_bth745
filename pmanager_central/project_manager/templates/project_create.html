@@ -2,92 +2,210 @@
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Create Project</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
-<head>
-  <title>Create Project</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Bootstrap CSS File -->
-  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <!-- Main CSS file -->
-  <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
-  <!-- Javascript Libraries -->
-  <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
-  <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS File -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<body>
+    <style>
+      .carousel-item {
+        text-align: center;
+        min-height: 280px;
+      }
+    </style>
   </head>
 
   <body>
-    <!-- Navbar (sit on top) -->
-    <div class="w3-top">
-      <div class="w3-bar w3-white w3-card" id="myNavbar">
-        <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
-        <!-- Right-sided navbar links -->
-        <div class="w3-right w3-hide-small">
-          <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-          <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My Projects</a>
-          <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create
-            Project</a>
-          <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
-          <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i>
-            Sign out</a>
+    <!-- Header -->
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="text-transform: uppercase;">
+        <a class="navbar-brand" href="#">Product Managment</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+            
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'index' %}">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Products & Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'project-create' %}">Create Project</a>
+            </li>
+          </ul>
+          {% if user.is_authenticated %}
+          {% block empty %}{% endblock%}
+          {% else %}
+          <span span class="navbar-text" class="{% block register_active %}{% endblock %}">
+            <a href="{% url 'register' %}">Sign Out</a>
+          </span>
+          <span class="navbar-text" class="{% block login_active %}{% endblock %}">
+            <a href="{% url 'login' %}">Log In</a>
+          </span>
+          {% endif %}
+          {% if user.is_authenticated %}
+          <span class="navbar-text" style="padding-right: 10px;">
+            <a href="%">{{ user.get_username }}</a>
+          </span>
+          {% csrf_token %}
+          <span class="navbar-text">
+            <a href="{% url 'logout'%}?next={{request.path}}">Sign out</a>
+          </span>
+          {% endif %}
         </div>
-        <!-- Hide right-floated links on small screens and replace them with a menu icon -->
-        <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
-          onclick="w3_open()">
-          <i class="fa fa-bars"></i>
-        </a>
+      </nav>
+    </header>
+    <!-- Header -->
+  
+    <!-- Container -->
+    <div class="container">
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-12 col-md-6 cl-xl-6">
+          <div>
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <!-- Wrapper for carousel items -->
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="{% static 'img/gallery/gallery-5.jpg' %}" alt="First Slide">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'img/gallery/gallery-2.jpg' %}" alt="Second Slide">
+                </div>
+                <div class="carousel-item">
+                  <img  src="{% static 'img/gallery/gallery-3.jpg' %}" alt="Third Slide">
+                </div>
+                <div class="carousel-item">
+                  <img src="{% static 'img/gallery/gallery-4.jpg' %}" alt="Fourth Slide">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-6">
+          <div class="card bg-light">
+            <article class="card-body mx-auto" style="max-width: 400px;text-transform: uppercase;">
+              <h4 class="card-title mt-3 text-center">Create Project</h4>
+                <form  class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">     
+                  {% csrf_token %} 
+                  {{ form.media }}
+                  {{ form | crispy }}
+                  <h4><a href="bannerformodal" data-toggle="modal" data-target="#taskModal">Add Task</a>
+                  </h4>
+                  <button type="submit" formmethod="post" class="btn btn-primary btn-sm">SUBMIT</button>
+                  <button type="reset" class="btn btn-secondary btn-sm">RESET</button>
+                </form>
+              </article>                                                   
+          </div>
+        </div>
       </div>
     </div>
-    <!--Navbar end-->
-    <div style="margin-top: 110px">
-      <div class="card bg-light">
-        <article class="card-body mx-auto" style="max-width: 400px;">
-          <h4 class="card-title mt-3 text-center">Create The Project!</h4>
-          <form>
-            <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
-              {% csrf_token %}
-              {{ form.media }}
-              {{ form | crispy }}
-              <h4>Tasks <a href="bannerformodal" data-toggle="modal" data-target="#taskModal"><i
-                    class="fas fa-plus w3-button"></i></a></h4>
-              <!-- {{ task_form | crispy }} -->
-              <button type="submit" formmethod="post" class="btn btn-primary btn-block"> Create Project
+        <!-- Modal -->
+        <div class="modal fade bannerformodal" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
               </button>
-            </form>
-          </form>
-        </article>
-      </div> <!-- card.// -->
-    </div>
-    <!--container end.//-->
-
-    <!-- Modal -->
-    <div class="modal fade bannerformodal" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            {{ task_form | crispy }}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            <div class="modal-body">
+              {{ task_form | crispy }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </body>
+      <!-- Modal -->
+    <!-- Container -->
 
+    <!-- Footer -->
+    <footer class="page-footer font-small">
+      <!-- Footer Links -->
+      <div class="container">
+        <hr class="rgba-white-light" style="margin: 0 15%;">
+        <!-- Grid row-->
+        <div class="row text-center d-flex justify-content-center pt-5 mb-3">
+          <!-- Grid column -->
+          <div class="col-md-2 mb-3">
+            <h6 class="text-uppercase font-weight-bold">
+              <a href="{% url 'index' %}">About</a>
+            </h6>
+          </div>
+          <!-- Grid column -->
+      
+          <!-- Grid column -->
+          <div class="col-md-2 mb-3">
+            <h6 class="text-uppercase font-weight-bold">
+              <a href="#!">Products</a>
+            </h6>
+          </div>
+          <!-- Grid column -->
+    
+          <!-- Grid column -->
+          <div class="col-md-2 mb-3">
+            <h6 class="text-uppercase font-weight-bold">
+                <a href="#!">Copyright</a>
+            </h6>
+          </div>
+          <!-- Grid column -->
+      
+          <!-- Grid column -->
+          <div class="col-md-2 mb-3">
+            <h6 class="text-uppercase font-weight-bold">
+              <a href="#!">Privacy</a>
+            </h6>
+          </div>
+          <!-- Grid column -->
+      
+          <!-- Grid column -->
+          <div class="col-md-2 mb-3">
+            <h6 class="text-uppercase font-weight-bold">
+              <a href="#!">Contact</a>
+            </h6>
+          </div>
+          <!-- Grid column -->
+      
+        </div>
+        <!-- Grid row-->
+        
+        <hr class="rgba-white-light" style="margin: 0 15%;">
+      
+      </div>
+      <!-- Footer Links -->
+      
+      <!-- Copyright -->
+      <div class="float-right"><a href="#">Back to top</a></div>
+      <div class="footer-copyright text-center py-3">&copy; 2019 All rights reserved. Design by Product Manager</div>
+      <!-- Copyright -->
+      
+    </footer>
+    <!-- Footer -->
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+    <!-- Template Main Javascript File -->
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+  
 </html>
