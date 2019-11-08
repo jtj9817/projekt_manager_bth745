@@ -17,7 +17,23 @@
   <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
   <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <style>
 
+      tr,th,h1,a,h5,ul {
+        color: white;
+      }
+
+      h2, h4, p {
+        color: black;
+      }
+     /* Full height image header */
+     .bgimg-1 {
+       background-position: center;
+       background-size: cover;
+       background-image: url("{% static 'img/background.jpeg' %}");
+       min-height: 100%;
+     }
+   </style>
 <body>
   </head>
 
@@ -25,7 +41,7 @@
     <!-- Navbar (sit on top) -->
     <div class="w3-top">
       <div class="w3-bar w3-white w3-card" id="myNavbar">
-        <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+          <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
           <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
@@ -44,7 +60,9 @@
       </div>
     </div>
     <!--Navbar end-->
-    <div style="margin-top: 110px">
+    <!-- Header with full-height image -->
+<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+    <div style="margin-top: 65px">
       <div class="row">
         <div class="col-md-4">
           <ul>
@@ -61,17 +79,21 @@
         </div>
         <div class="col-md-4">
           <div class="card bg-light">
-            <h5 class="card-header">
+            <h4 class="card-header">
               Project Details
-            </h5>
-            <div class="card-body text-center">
+            </h4>
+            <div class="card-body text-left">
               <h2 class="card-title mt-3">{{ project.projectname }}</h2>
-              <h5>Project Created: </h5>
+              <h4>Project Created: </h5>
               <p>{{ project.proj_created_at }}</p>
-              <h5>Project Description</h5>
+              <h4>Project Description</h5>
               <p>{{ project.projdesc }}</P>
-              <h5>Project Deadline</h5>
+              <h4>Project Deadline</h5>
               <p>{{ project.project_deadline }}</p>
+              <td>
+                  <a href="{% url 'project-update' project.projectid %}"><button type="button" class="btn btn-primary">Edit</button></a>
+                  <a href="{% url 'project-delete' project.projectid %}"><button type="button" class="btn btn-warning">Delete</button></a>
+              </td> 
               <!--<h5>Project Members</h5> -->
               <!--<h5>Project Tasks</h5> -->
             </div>
@@ -80,7 +102,7 @@
       </div>
     </div>
     <!--container end.//-->
-
+    </header>
   </body>
 
 </html>

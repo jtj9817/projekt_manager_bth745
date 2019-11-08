@@ -2,88 +2,151 @@
 {% load crispy_forms_tags %}
 
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <title>Register Account</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
-
-  <!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i"
-    rel="stylesheet">
-
-  <!-- Bootstrap CSS File -->
-  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-  <!-- Libraries CSS Files -->
-  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-  <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'lib/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
-
-  <!-- Main Stylesheet File -->
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-  <!-- JavaScript Libraries -->
-  <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
-  <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'lib/easing/easing.min.js' %}"></script>
-  <script src="{% static 'lib/wow/wow.min.js' %}"></script>
-  <script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
-  <script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
-  <script src="{% static 'lib/magnific-popup/magnific-popup.min.js' %}"></script>
-  <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
-
-  <!-- Template Main Javascript File -->
-  <script src="{% static 'js/main.js' %}"></script>
-</head>
-
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h2,h4,h5,h6 {font-family: "Raleway", sans-serif; }
+h1,p,h3 {color: black;}
+* {
+  box-sizing: border-box;
+}
+/* Add padding to containers */
+.container {
+  width: 70%;
+  margin-left: 65%;
+  margin-bottom: 20px;
+  background-color: white;
+}
+/* Full-width input fields */
+input[type=text], input[type=date], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 0px 0 25px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+input[type=text]:focus, input[type=date]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 20px;
+}
+/* Set a style for the submit button */
+.cancelbtn, .createbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 8px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 20%;
+  opacity: 0.9;
+}
+.cancelbtn:hover, .createbtn:hover {
+  opacity: 1;
+}
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+body, html {
+  height: 100%;
+  line-height: 1.6;
+}
+/* Full height image header */
+.bgimg-1 {
+  background-position: center;
+  background-size: cover;
+  background-image: url("{% static 'img/background.jpeg' %}");
+  min-height: 100%;
+}
+.w3-bar .w3-button {
+  padding: 16px;
+}
+</style>
 <body>
 
-  <!--==========================
-    Header
-  ============================-->
-  <header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
-    <div class="container">
-      <div id="logo" class="pull-left">
-        <h1><a href="#intro" class="scrollto">Project Manager</a></h1>
-        <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+    <div class="w3-bar w3-white w3-card" id="myNavbar">
+        <a href="{% url 'register' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+
+      <!-- Right-sided navbar links -->
+      <div class="w3-right w3-hide-small">
+        <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+        <a href="{% url 'register' %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Sign Up</a>
       </div>
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active"><a href="{% url 'index' %}">Home</a></li>
-          <li class="{% block register_active %}{% endblock %}"><a href="{% url 'register' %}">Register</a></li>
-          <li class="{% block login_active %}{% endblock %}"><a href="{% url 'login' %}">Log In</a></li>
-          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-          <li><a href="{% url 'project-create' %}">Create Project</a></li>
-        </ul>
-      </nav><!-- #nav-menu-container -->
+      <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+        <i class="fa fa-bars"></i>
+      </a>
     </div>
-  </header><!-- #header -->
-  <div class="container" style="margin-top: 100px">
-    <div class="card bg-light">
-      <article class="card-body mx-auto" style="max-width: 400px;">
-        <h4 class="card-title mt-3 text-center">Login to your account</h4>
-        <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ form | crispy }}
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-block"> Log-in </button>
-          </div>
-        </form>
-        <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-      </article>
-    </div> <!-- card.// -->
-
   </div>
-  <!--container end.//-->
 
-  <body>
-</html>
+<!-- Header with full-height image -->
+<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-row-padding w3-center w3-left-align w3-text-white" style="margin-top:64px" >
+        <div class="w3-half" style="margin-top:50px" >
+            <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="container">
+                <h1>Login</h1>
+
+                <hr>
+                <input type="text" placeholder="Enter username" name="username" required>
+
+                <input type="password" placeholder="Password" name="password" required>
+                <hr>
+
+                <button type="submit" class="createbtn">Login</button>
+              </div>
+              
+            </form>
+        </div>
+  </div>
+
+</header>
+
+<!-- About Section -->
+<div class="w3-container" style="padding:128px 16px" id="about">
+        <h3 class="w3-center">ABOUT THE COMPANY</h3>
+        <p class="w3-center w3-large">Key features of our company</p>
+        <div class="w3-row-padding w3-center" style="margin-top:64px">
+          <div class="w3-quarter">
+            <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
+            <p class="w3-large">Responsive</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+          </div>
+          <div class="w3-quarter">
+            <i class="fa fa-heart w3-margin-bottom w3-jumbo"></i>
+            <p class="w3-large">Passion</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+          </div>
+          <div class="w3-quarter">
+            <i class="fa fa-diamond w3-margin-bottom w3-jumbo"></i>
+            <p class="w3-large">Design</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+          </div>
+          <div class="w3-quarter">
+            <i class="fa fa-cog w3-margin-bottom w3-jumbo"></i>
+            <p class="w3-large">Support</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
+          </div>
+        </div>
+      </div>
+
+<script>

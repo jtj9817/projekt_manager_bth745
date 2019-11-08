@@ -12,6 +12,15 @@
 <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 <!-- Main CSS file -->
  <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
+ <style>
+   /* Full height image header */
+   .bgimg-1 {
+     background-position: center;
+     background-size: cover;
+     background-image: url("{% static 'img/background.jpeg' %}");
+     min-height: 100%;
+   }
+ </style>
 <body>
 </head>
 
@@ -19,7 +28,7 @@
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
     <div class="w3-bar w3-white w3-card" id="myNavbar">
-        <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+        <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
       <!-- Right-sided navbar links -->
       <div class="w3-right w3-hide-small">
         <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
@@ -34,9 +43,11 @@
       </a>
     </div>
   </div><!--Navbar end-->
-    <div class="container" style="margin-top: 110px">
+      <!-- Header with full-height image -->
+<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+    <div class="container" style="margin-top: 65px">
         <div class="card bg-light">
-            <article class="card-body mx-auto text-center" style="max-width: 400px;">
+            <article class="card-body mx-auto text-center" style="max-width: 800px;">
                 <h3 class="card-title mt-3 text-center">Delete The Project?</h3>
                 <strong><h4>Project Name:</h4></strong>
                 <h5><p> {{ project.projectname }}</h5></p>
@@ -59,6 +70,7 @@
             </article>
         </div> <!-- card.// -->
     </div>
+    </header>
     <!--container end.//-->
 
 </body>

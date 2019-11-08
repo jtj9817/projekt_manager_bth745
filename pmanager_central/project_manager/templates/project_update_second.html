@@ -18,13 +18,22 @@
     <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
     <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <style>
+           /* Full height image header */
+           .bgimg-1 {
+             background-position: center;
+             background-size: cover;
+             background-image: url("{% static 'img/background.jpeg' %}");
+             min-height: 100%;
+           }
+         </style>
 </head>
 
 <body>
     <!-- Navbar (sit on top) -->
     <div class="w3-top">
         <div class="w3-bar w3-white w3-card" id="myNavbar">
-            <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+            <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
             <!-- Right-sided navbar links -->
             <div class="w3-right w3-hide-small">
                 <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
@@ -44,7 +53,9 @@
         </div>
     </div>
     <!--Navbar end-->
-    <div style="margin-top: 110px">
+        <!-- Header with full-height image -->
+<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+    <div style="margin-top: 65px">
         <div class="row">
             <div class="col-md-4">
             </div>
@@ -97,7 +108,7 @@
                     <h5 class="card-header">
                         Project Details
                     </h5>
-                    <div class="card-body text-center">
+                    <div class="card-body text-left">
                         <p class="card-text">
                             <h2>Project Name:</h2>
                             <h3 class="card-title mt-3">{{ project.projectname }}</h3>
@@ -141,6 +152,7 @@
             </div>
         </div>
     </div>
+</header>
 </body>
 <!--Script for AJAX using the Task modal-->
 <script>

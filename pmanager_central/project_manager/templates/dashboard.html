@@ -12,12 +12,25 @@
 <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 <!-- Main CSS file -->
  <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
+ <style>
+
+	 h2,tr,th, h1,a {
+		 color: white;
+	 }
+	/* Full height image header */
+	.bgimg-1 {
+	  background-position: center;
+	  background-size: cover;
+	  background-image: url("{% static 'img/background.jpeg' %}");
+	  min-height: 100%;
+	}
+</style>
 <body>
 </head>
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
     <div class="w3-bar w3-white w3-card" id="myNavbar">
-        <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+        <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
       <!-- Right-sided navbar links -->
       <div class="w3-right w3-hide-small">
         <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
@@ -32,12 +45,14 @@
       </a>
     </div>
   </div><!--Navbar end-->
-	<div class="container-fluid" style="margin-top: 100px">
+<!-- Header with full-height image -->
+<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+	<div class="container-fluid" style="margin-top: 65px">
 		<div class="row">
 			<div class="col-md-4">
 			</div>
 			<div class="col-md-4">
-				<h2>My Projects</h2>
+				<h1>My Projects</h1>
 				<table class="table table-responsive table-hover">
 					<thead>
 						<tr>
@@ -68,10 +83,10 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<!-- <td>
 								<a href="{% url 'project-update' project.projectid %}"><button type="button" class="btn btn-primary">Edit</button></a>
 								<a href="{% url 'project-delete' project.projectid %}"><button type="button" class="btn btn-warning">Delete</button></a>
-							</td>
+							</td> -->
 						</tr>
 						{% endfor %}
 					</tbody>
@@ -80,5 +95,6 @@
 			</div>
 		</div>
 	</div>
+</header>
 </body>
 </html>

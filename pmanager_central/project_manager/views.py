@@ -20,6 +20,8 @@ def index(request):
 	return render(request, 'index.html')
 def dashboard(request):
     return render(request, 'dashboard.html')
+def home(request):
+    return render(request, 'home.html')
 def login_user(request):
 	if request.method == "POST":
 		username = request.POST['username']
