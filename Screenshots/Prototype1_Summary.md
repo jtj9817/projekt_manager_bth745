@@ -1,11 +1,18 @@
 # Create Project
-![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype1Olena/Screenshots/CreateProject.JPG)
+![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/blob/prototype2Olena/Screenshots/CreateProject.JPG)
 
-# Home Page
-![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype1Olena/Screenshots/HomePage.JPG)
+# Dashboard
+![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/blob/prototype2Olena/Screenshots/Dashboard.JPG)
 
-# Login Page
-![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype1Olena/Screenshots/Login.JPG)
+# Delete Project Confirmation
+![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/blob/prototype2Olena/Screenshots/DeleteProject(Confirmation).JPG)
 
-# Register Page
-![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype1Olena/Screenshots/Register.JPG)
+# Edit Project (Tasks)
+![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/blob/prototype2Olena/Screenshots/EditProject(Tasks).JPG)
+
+# Edit Project (Name, Description, Deadline)
+![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/blob/prototype2Olena/Screenshots/EditProject(name%2Cdescription%2Cdeadline).JPG)
+
+# View Project
+![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/blob/prototype2Olena/Screenshots/ViewProject.JPG)
+
