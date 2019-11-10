@@ -1,2 +1,4 @@
 
 .vscode/settings.json
+
+pmanager_central/db.sqlite3

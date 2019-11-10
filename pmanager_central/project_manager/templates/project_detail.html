@@ -20,7 +20,7 @@
   <style>
 
       tr,th,h1,a,h5,ul {
-        color: white;
+        color: black;
       }
 
       h2, h4, p {
@@ -64,18 +64,20 @@
 <header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
     <div style="margin-top: 65px">
       <div class="row">
-        <div class="col-md-4">
-          <ul>
+        <div class="col-md-4" style="margin-left: 20px" >
+          <div class="card bg-light"> 
             {% for task in tasks %}
               <h5 class="w3-green">{{ task.task_name}} </h5>
+              <ul>
                 <h5>Task Description</h5>
                 {{ task.task_description }}
                 <h5>Task Priority</h5>
                 {{ task.get_task_priority_display }}
                 <h5>Task Performer</h5>
                 {{ task.task_performer }}
+              </ul>
             {% endfor %}
-          </ul>
+          </div>
         </div>
         <div class="col-md-4">
           <div class="card bg-light">
@@ -99,6 +101,7 @@
             </div>
           </div> <!-- card.// -->
         </div>
+
       </div>
     </div>
     <!--container end.//-->
