@@ -220,4 +220,25 @@ class ProjectDelete(LoginRequiredMixin,View):
 			return redirect('dashboard')	
 		return render(request, self.template_name, context)
 
- 
+ #Generic CRUD for Tasks
+class TasksList(LoginRequiredMixin,ListView):
+	model = Task
+	context_object_name = "tasks"
+     #template_name = "tasks_list.html"
+	def get_context_data(self, **kwargs):
+		 # Call the base implementation first to get a context
+		context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+		context['tasks'] = Task.objects.filter(project__projectid=pk)
+		return context
+class TaskDetail(LoginRequiredMixin,DetailView):
+	model = Task
+	#template_name = "task_detail.html"
+class TaskUpdate(LoginRequiredMixin, UpdateView):
+    model = Task
+    context_object_name = 'task'
+	 #template_name = "task_update.html"
+
+class TaskDelete(LoginRequiredMixin, DeleteView):
+    model = Task
+	 #template_name = "task_delete.html"
