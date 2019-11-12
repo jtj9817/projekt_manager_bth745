@@ -61,7 +61,7 @@ class Task(models.Model):
     task_priority = models.PositiveIntegerField("Task Priority",
         choices=TASK_PRIORITY, default=1)
     task_performer = models.ForeignKey(User,default=1, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1, related_name='project_tasks')
     def __str__(self):
         return (self.task_name)
     

@@ -2,3 +2,5 @@
 .vscode/settings.json
 
 pmanager_central/db.sqlite3
+
+pmanager_central/project_manager/templates/project-tasks.html

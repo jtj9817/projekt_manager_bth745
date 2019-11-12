@@ -24,6 +24,10 @@
 	  background-image: url("{% static 'img/background.jpeg' %}");
 	  min-height: 100%;
 	}
+
+	.table-hover tbody tr:hover td {
+    background: DeepSkyBlue  ;
+	}
 </style>
 <body>
 </head>
@@ -53,7 +57,7 @@
 			</div>
 			<div class="col-md-4">
 				<h1>My Projects</h1>
-				<table class="table table-responsive table-hover">
+				<table class="table table-responsive table-hover" style="table-hover: background-color:white;">
 					<thead>
 						<tr>
 							<th>

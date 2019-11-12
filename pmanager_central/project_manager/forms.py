@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={'placeholder': 'Enter your password'}))
     password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput(attrs={'placeholder': 'Enter your password again'}))
-    email = forms.EmailField(widget=forms.EmailInput(
+    email = forms.CharField(widget=forms.TextInput(
         attrs={'placeholder': 'Enter your email'}), required=True)
     first_name = forms.CharField(label='First Name', max_length=30, min_length=4, required=True,
                                 widget=forms.TextInput(attrs={'placeholder': 'Enter your first name and second name if any'}))
@@ -22,7 +22,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name','last_name', 'username', 'email', 'password']
+        fields = ['first_name','last_name', 'username', 'email', 'password', 'password2']
 
     # Clean username data field to avoid conflict with URL slugging
     def clean_username(self):
@@ -64,8 +64,7 @@ class TasksForm(forms.ModelForm):
         attrs={'placeholder': 'Describe the task in 30 words or less'}))
     class Meta:
         model = Task
-        fields = ['task_name', 'task_description', 'task_priority', 'task_performer']
-    
+        fields = ['task_name', 'task_description', 'task_priority', 'task_performer']    
 
 class ProjectsForm(forms.ModelForm):
     projectname = forms.CharField(label='Project Name', max_length=30, min_length=5, widget=forms.TextInput(

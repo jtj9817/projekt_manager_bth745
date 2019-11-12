@@ -84,6 +84,8 @@ def update_profile(request):
 @login_required
 @transaction.atomic
 def project_create(request):
+	TaskInlineFormSet = inlineformset_factory(Project, Task, fields=('task_name', 
+            'task_description','task_priority', 'task_performer'), extra=0)
 	if request.method == 'POST':
 		form = ProjectsForm(request.POST)
 		task_form = TasksForm(request.POST)
@@ -175,16 +177,17 @@ class ProjectUpdateView(FormView):
 def ProjectUpdateView2(request,pk):
 	template_name = "project_update_second.html"
 	TaskInlineFormSet = inlineformset_factory(Project, Task, fields=('task_name', 
-            'task_description','task_priority', 'task_performer'))
+            'task_description','task_priority', 'task_performer'), extra=0, can_delete=True)
 	project = Project.objects.get(projectid=pk)
+	tasks = Task.objects.filter(project__projectid=pk)
 	if request.method == "POST":
 		formset = TaskInlineFormSet(request.POST, request.FILES, instance=project)
 		if formset.is_valid():
 			formset.save()
-			return redirect('dashboard')
+			return redirect('project-update-second',project.projectid)
 	else:
 		formset = TaskInlineFormSet(instance=project)
-	return render(request, 'project_update_second.html', {'formset':formset, 'project':project})
+	return render(request, 'project_update_second.html', {'formset':formset, 'project':project, 'tasks': tasks})
 
 class ProjectDelete(LoginRequiredMixin,View):
 	template_name = "project_delete.html"

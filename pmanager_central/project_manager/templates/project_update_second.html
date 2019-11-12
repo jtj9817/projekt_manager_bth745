@@ -18,22 +18,41 @@
     <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
     <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/dynamic-formset.js' %}"></script>
     <style>
-           /* Full height image header */
-           .bgimg-1 {
-             background-position: center;
-             background-size: cover;
-             background-image: url("{% static 'img/background.jpeg' %}");
-             min-height: 100%;
-           }
-         </style>
+        /* Full height image header */
+        .bgimg-1 {
+            background-position: center;
+            background-size: cover;
+            background-image: url("{% static 'img/background.jpeg' %}");
+            min-height: 100%;
+        }
+    </style>
+    <!--Script for Adding/Remove Task Forms-->
+    <script>
+        $(function () {
+            $('#tasksForm tr').formset({
+                addText: 'Add Another Task',
+                deleteText: 'Remove Task Form',
+                addCssClass: 'w3-button w3-blue-grey',
+                prefix: '{{ formset.prefix }}'
+            });
+        })
+
+        $(document).ready(function () {
+            $(":checkbox").each(function (index) {
+                $(this).prependTo($("#div_" + $(this).attr('id')))
+            });
+        });
+    </script>
 </head>
 
 <body>
     <!-- Navbar (sit on top) -->
     <div class="w3-top">
         <div class="w3-bar w3-white w3-card" id="myNavbar">
-            <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+            <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i>
+                ProjectManager</a>
             <!-- Right-sided navbar links -->
             <div class="w3-right w3-hide-small">
                 <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
@@ -53,108 +72,119 @@
         </div>
     </div>
     <!--Navbar end-->
-        <!-- Header with full-height image -->
-<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
-    <div style="margin-top: 65px">
-        <div class="row">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4">
-                {% if messages %}
-                {% for message in messages %}
-                <div class="col-md-12 alert alert-success alert-dismissible fade show">{{ message}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endfor %}
-                {% endif %}
-                <div class="card">
-                    <h5 class="card-header">
-                        Edit Project Tasks
-                    </h5>
-                    <div class="card-body text-center">
-                        <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
-                            {{ formset.management_form }}
-                            {% csrf_token %}
-                            {% for form in formset %}
-                                {{ form | crispy }}
-                            {% endfor %}
+    <!-- Header with full-height image -->
+    <header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
+        <div style="margin-top: 65px">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        {% for task in tasks %}
+                        <h5 class="w3-green">{{ task.task_name}} </h5>
+                        <ul>
+                            <h5>Task Description</h5>
+                            {{ task.task_description }}
+                            <h5>Task Priority</h5>
+                            {{ task.get_task_priority_display }}
+                            <h5>Task Performer</h5>
+                            {{ task.task_performer }}
                             <div class="w3-bar">
                                 <div class="w3-bar-item"><button type="submit" formmethod="post"
-                                        class="btn btn-primary"> Save Changes
+                                        class="btn btn-warning"> Delete Task
                                     </button></div>
-                                <div class="w3-bar-item w3-right"><button class="btn"><a
-                                            href="{% url 'dashboard' %}">Cancel</a></button></div>
                             </div>
-                        </form>
+                        </ul>
+                        {% endfor %}
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <h5 class="card-header">
-                        Project Details
-                    </h5>
-                    <div class="card-body text-left">
-                        <p class="card-text">
-                            <h2>Project Name:</h2>
-                            <h3 class="card-title mt-3">{{ project.projectname }}</h3>
-                            <h5>Project Created: </h5>
-                            <p>{{ project.proj_created_at }}<p>
-                                    <h5>Project Description</h5>
-                                    <p>{{ project.projdesc }}</P>
-                                    <h5>Project Deadline</h5>
-                                    <p>{{ project.project_deadline }}</p>
-                                    <!--<h5>Project Members</h5> -->
-                                    <!--<h5>Project Tasks</h5> -->
-                                </p>
+                <div class="col-md-4">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="col-md-12 alert alert-success alert-dismissible fade show">{{ message}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    <div class="card">
+                        <h5 class="card-header">
+                            Edit Project Tasks
+                        </h5>
+                        <div class="card-body text-center">
+                            <form id="tasksForm" role="form" action="" method="POST" enctype="multipart/form-data">
+                                {{ formset.management_form }}
+                                {% csrf_token %}
+                                <table class="table" cellpadding="0" cellspacing="0">
+                                    <tbody>
+                                        {% for form in formset.forms %}
+                                        <tr>
+                                            <td>
+                                                {{ form | crispy }}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div class="w3-bar">
+                                    <div class="w3-bar-item"><button type="submit" formmethod="post"
+                                            class="btn btn-primary"> Save Changes
+                                        </button></div>
+                                    <div class="w3-bar-item w3-right"><button class="btn"><a
+                                                href="{% url 'dashboard' %}">Cancel</a></button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <h5 class="card-header">
+                            Project Details
+                        </h5>
+                        <div class="card-body text-left">
+                            <p class="card-text">
+                                <h2>{{ project.projectname }}</h2>
+                                <h5>Project Created: </h5>
+                                <p>{{ project.proj_created_at }}<p>
+                                        <h5>Project Description</h5>
+                                        <p>{{ project.projdesc }}</P>
+                                        <h5>Project Deadline</h5>
+                                        <p>{{ project.project_deadline }}</p>
+                                        <!--<h5>Project Members</h5> -->
+                                        <!--<h5>Project Tasks</h5> -->
+                                    </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--container end.//-->
+        <!--container end.//-->
 
-    <!-- Modal -->
-    <div class="modal fade bannerformodal" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <!-- Modal -->
+        <div class="modal fade bannerformodal" id="taskModal" tabindex="-1" role="dialog"
+            aria-labelledby="taskModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ task_form | crispy }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" formmethod="post" onclick="postTask()">Save changes</button>
+                    </div>
+                    </form>
                 </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ task_form | crispy }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" formmethod="post" onclick="postTask()">Save changes</button>
-                </div>
-                </form>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 </body>
-<!--Script for AJAX using the Task modal-->
-<script>
-    function postTask() {
-        $.ajax({
-            url: '/project/update/second/'
-            type: "POST",
-            datatype: "formData",
-            async: true,
-            success: function (data) {
-                $('#output').html(data.html_form)
-            }
-        });
-    }
-</script>
 
 </html>

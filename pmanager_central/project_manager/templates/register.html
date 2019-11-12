@@ -111,19 +111,12 @@ body, html {
         <div class="w3-half" style="margin-top:5%" >
             <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-              <div class="container">
+              
+              <div class="container w3-blue-grey">
                 <h1>Register</h1>
-
-                <hr>
-                <input type="text" placeholder="Enter Your Name" name="full_name" required>
-
-                <input type="text" placeholder="Enter Email" name="email" required>
-            
-                <input type="text" placeholder="Enter Username" name="username" required>
-
-                <input type="password" placeholder="Password" name="password" required>
-                <hr>
-            
+              <p>
+              {{ form | crispy }} 
+                </p>
                 <button type="submit" formmethod="post" class="registerbtn">Sign Up</button>
               </div>
               
