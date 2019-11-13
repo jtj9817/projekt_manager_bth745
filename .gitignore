@@ -1,2 +1,11 @@
-
 .vscode/
+### Django ###
+*.log
+*.pot
+*.pyc
+project_manager/__pycache__/
+../local_settings.py
+project_manager/db.sqlite3
+db.sqlite3-journal
+media
+*.sqlite3

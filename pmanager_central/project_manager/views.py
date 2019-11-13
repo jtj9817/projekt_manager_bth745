@@ -15,6 +15,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.http import JsonResponse
 from django.forms import formset_factory, inlineformset_factory
+from django.http import HttpResponseRedirect
 
 
 # Create your views here.
@@ -130,10 +131,6 @@ def project_details(request, pk):
 		context['tasks'] = tasks
 	return render(request, template_name, context)
 
-#class ProjectDetailView(LoginRequiredMixin,generic.DetailView):
-#	model = Project
-#	template_name = "project_detail.html"
- 
 class ProjectUpdateView(FormView):
 	template_name = "project_update.html"
 	#Retrieve Project object from the <pk> value passed through the URL parameters
@@ -172,6 +169,7 @@ class ProjectUpdateView(FormView):
 			context['projectid'] = obj.projectid
 		return render(request, self.template_name, context)
 
+#Edits Tasks and allows creating new ones
 @login_required
 @transaction.atomic
 def ProjectUpdateView2(request,pk):
@@ -189,11 +187,30 @@ def ProjectUpdateView2(request,pk):
 		formset = TaskInlineFormSet(instance=project)
 	return render(request, 'project_update_second.html', {'formset':formset, 'project':project, 'tasks': tasks})
 
+#Custom FBV for Task deletion
+@login_required
+@transaction.atomic
+def DeleteTask(request, pk):
+	#template_name ="task_delete.html"
+	task = get_object_or_404(Task, taskid=pk)
+	#project = task.project.projectid
+	#context = {}
+	#data = dict()
+	if request.method == "POST":
+		if task is not None:
+			task.delete()
+			messages.success(request, 'Task was successfully deleted!')
+	#else:
+	# 	context = {'task': task}
+	# 	data['html_form'] = render_to_string('partial_task_delete.html',context,request=request) 
+	#return render(request, 'project_update_second.html' project.projectid, context)
+	#return JsonResponse(data)
+	return redirect(reverse('project-update-second', kwargs={'pk': project}))
+	
 class ProjectDelete(LoginRequiredMixin,View):
 	template_name = "project_delete.html"
 	success_message = "Project was deleted successfully!"
-
-
+ 
 	def get_object(self):
 		id = self.kwargs.get('pk')
 		obj = None

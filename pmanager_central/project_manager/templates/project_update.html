@@ -143,18 +143,4 @@
     </div>
     </header>
 </body>
-<!--Script for AJAX using the Task modal-->
-<script>
-    function postTask() {
-        $.ajax({
-            url: 'project-update'
-            type:"POST",
-            datatype: "json",
-            async: true,
-            success: function(data){
-                $('#output').html(data.html_form)
-            }
-        });
-    }
-</script>
 </html>
