@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserForm, ProjectsForm, TasksForm
+from .forms import UserForm, ProjectsForm, TasksForm, ProfileForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.views.generic import DetailView, View, CreateView, UpdateView, DeleteView, ListView
@@ -13,9 +13,8 @@ from django.utils.decorators import method_decorator
 from django.db import transaction
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.forms import formset_factory, inlineformset_factory
-from django.http import HttpResponseRedirect
 
 
 # Create your views here.
@@ -63,23 +62,18 @@ def register(request):
 @login_required
 @transaction.atomic
 def update_profile(request):
+    form = ProfileForm(instance=request.user)
+    context = {}
+    context['form'] = form
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, _("Your profile was successfully updated!"))
+        form = ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ("Your profile was successfully updated!"))
+            return redirect('profile')
         else:
-            messages.error(request, _("Please correct the errors"))
-    else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-        return render(request, 'profile.html',{
-		'user_form': user_form,
-		'profile_form': profile_form
-	})
-
+            messages.error(request, ("Please correct the errors"))
+    return render(request, 'profile.html', context)
 
 #Views for Projects 
 @login_required
@@ -193,7 +187,7 @@ def ProjectUpdateView2(request,pk):
 def DeleteTask(request, pk):
 	#template_name ="task_delete.html"
 	task = get_object_or_404(Task, taskid=pk)
-	#project = task.project.projectid
+	project = task.project.projectid
 	#context = {}
 	#data = dict()
 	if request.method == "POST":

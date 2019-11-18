@@ -1,106 +1,92 @@
 {% load static %}
 {% load crispy_forms_tags %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="utf-8">
-  <title>Register Account</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
-
-<!-- Favicons -->
-  <link href="{% static 'img/favicon.png' %}" rel="icon">
-  <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700|Open+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
-
-  <!-- Bootstrap CSS File -->
-  <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
-  <!-- Libraries CSS Files -->
-  <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
-  <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-  <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
-  <link href="{% static 'lib/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
-
-  <!-- Main Stylesheet File -->
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
-
-  <!-- JavaScript Libraries -->
-  <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
-  <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'lib/easing/easing.min.js' %}"></script>
-  <script src="{% static 'lib/wow/wow.min.js' %}"></script>
-  <script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
-  <script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
-  <script src="{% static 'lib/magnific-popup/magnific-popup.min.js' %}"></script>
-
-
-  <!-- Template Main Javascript File -->
-  <script src="{% static 'js/main.js' %}"></script>
+  <title>My Profile</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Materialize Style and JavaScript -->
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--End of Materialize Style-->
+  <!--Font Awesome Kit-->
+  <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
+  <!-- Main CSS file -->
+  <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
+  <!-- Javascript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <!-- Custom styles for Login -->
 </head>
-<body style="background: gray ">
 
- <!--==========================
-    Header
-  ============================-->
-  <header id="header" style="background: linear-gradient(45deg, #1de099, #1dc8cd)">
-    <div class="container" >
-      <div id="logo" class="pull-left">
-        <h1><a href="#intro" class="scrollto">Project Manager</a></h1>
-        <!-- <a href="#intro"><img src="img/logo.png" alt="" title=""></a> -->
-      </div>
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active"><a href="#intro">Home</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="{% url 'register' %}">Register</a></li>
-          <li class="menu-has-children"><a href="">Drop Down</a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="menu-has-children"><a href="#">Drop Down 2</a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-              <li><a href="#">Drop Down 5</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav><!-- #nav-menu-container -->
+<body class="bgimg-1">
+  <div class="w3-bar w3-white w3-card" id="myNavbar">
+    <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
+    <!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small">
+      <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
+      <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My Projects</a>
+      <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create Project</a>
+      <a href="{% url 'profile' %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
+      <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i>
+        Sign out</a>
     </div>
-  </header><!-- #header -->
-<div class="container" style="margin-top: 110px">
-<div class="card bg-light">
-<article class="card-body mx-auto" style="max-width: 400px;">
-	<h4 class="card-title mt-3 text-center">Create Account</h4>
-	<p class="text-center">Get started with your free account</p>
-	<form>
-	{% block content %}
-        <form  class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">     
-        {% csrf_token %} 
-          {{ user_form.as_p }}
-          {{ profile_form.as_p }}
-        </form>
-        {% endblock %}
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary btn-block"> Save Changes  </button>
-    </div> <!-- form-group// -->                                                              
-</form>
-</article>
-</div> <!-- card.// -->
-
-</div> 
-<!--container end.//-->
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+      onclick="w3_open()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  </div>
+  <div class="row container" style="margin-top:5%">
+    <div class="col s6 m4">
+    </div>
+    <div class="login-div card-panel white col s6 m4">
+      <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row center-align">
+          <h5>Update Profile</h5>
+        </div>
+        <div class="row center-align">
+          {% if messages %}
+          {% for message in messages %}
+          <div class="col s12 alert">{{ message}}
+          </div>
+          {% endfor %}
+          {% endif %}</div>
+        <div class="row center-align">
+          {{ form.non_field_errors }}
+        </div>
+        {% for field in form %}
+        <div class="row">
+          <div class="input-field col s12">
+            {{field.label }}
+            {{ field }}
+            {{ field.errors }}
+          </div>
+        </div>
+        {% endfor %}
+        <div class="row">
+          <div class="col s12 right-align"><button class="waves-effect waves-light btn blue" type="submit"
+              formmethod="post">Save Changes </button></div>
+        </div>
+      </form>
+    </div>
+    <div class="col s6 m4">
+    </div>
+  </div>
 </body>
+
 </html>

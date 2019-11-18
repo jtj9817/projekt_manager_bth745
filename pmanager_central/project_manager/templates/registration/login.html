@@ -3,150 +3,87 @@
 
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-body,h2,h4,h5,h6 {font-family: "Raleway", sans-serif; }
-h1,p,h3 {color: black;}
-* {
-  box-sizing: border-box;
-}
-/* Add padding to containers */
-.container {
-  width: 70%;
-  margin-left: 65%;
-  margin-bottom: 20px;
-  background-color: white;
-}
-/* Full-width input fields */
-input[type=text], input[type=date], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 0px 0 25px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-}
-input[type=text]:focus, input[type=date]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-/* Overwrite default styles of hr */
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 20px;
-}
-/* Set a style for the submit button */
-.cancelbtn, .createbtn {
-  background-color: #4CAF50;
-  color: white;
-  padding: 8px 8px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 20%;
-  opacity: 0.9;
-}
-.cancelbtn:hover, .createbtn:hover {
-  opacity: 1;
-}
-/* Add a blue text color to links */
-a {
-  color: dodgerblue;
-}
-/* Set a grey background color and center the text of the "sign in" section */
-.signin {
-  background-color: #f1f1f1;
-  text-align: center;
-}
-body, html {
-  height: 100%;
-  line-height: 1.6;
-}
-/* Full height image header */
-.bgimg-1 {
-  background-position: center;
-  background-size: cover;
-  background-image: url("{% static 'img/background.jpeg' %}");
-  min-height: 100%;
-}
-.w3-bar .w3-button {
-  padding: 16px;
-}
-</style>
-<body>
 
-<!-- Navbar (sit on top) -->
-<div class="w3-top">
+<head>
+  <title>Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Materialize Style and JavaScript -->
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--End of Materialize Style-->
+  <!--Font Awesome Kit-->
+  <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
+  <!-- Main CSS file -->
+  <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
+  <!-- Javascript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <!-- Custom styles for Login -->
+</head>
+
+<body class="bgimg-1">
+  <!-- Navbar (sit on top) -->
+  <div class="w3-top">
     <div class="w3-bar w3-white w3-card" id="myNavbar">
-        <a href="{% url 'register' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
-
+      <a href="{% url 'register' %}" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
       <!-- Right-sided navbar links -->
       <div class="w3-right w3-hide-small">
         <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
         <a href="{% url 'register' %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Sign Up</a>
       </div>
       <!-- Hide right-floated links on small screens and replace them with a menu icon -->
-      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+      <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+        onclick="w3_open()">
         <i class="fa fa-bars"></i>
       </a>
     </div>
   </div>
-
-<!-- Header with full-height image -->
-<header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">
-  <div class="w3-row-padding w3-center w3-left-align w3-text-white" style="margin-top:64px" >
-        <div class="w3-half" style="margin-top:50px" >
-            <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-              <div class="container">
-                <h1>Login</h1>
-
-                <hr>
-                <input type="text" placeholder="Enter username" name="username" required>
-
-                <input type="password" placeholder="Password" name="password" required>
-                <hr>
-
-                <button type="submit" class="createbtn">Login</button>
-              </div>
-              
-            </form>
+  <div class="row container" style="margin-top:5%">
+    <div class="col s6 m4">
+    </div>
+    <div class="login-div card-panel white col s6 m4">
+      <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+          <div class="logo"></div>
         </div>
+        <div class="row center-align">
+          <h5>Login</h5>
+        </div>
+        <div class="row center-align">
+          {{ form.non_field_errors }}
+        </div>
+        {% for field in form %}
+        <div class="row">
+          <div class="input-field col s12">
+            {{field.label }}
+            {{ field }}
+            {{ field.errors }}
+          </div>
+        </div>
+        {% endfor %}
+        <div class="row col s12"><a>
+        Forgot password?</a>
+        </div>
+        <div class="row">
+          <div class="col s12 right-align"><button class="waves-effect waves-light btn" type="submit"
+              formmethod="post">Login <i class="material-icons right">send</i></button></div>
+        </div>
+      </form>
+    </div>
+    <div class="col s6 m4">
+    </div>
   </div>
+</body>
 
-</header>
-
-<!-- About Section -->
-<div class="w3-container" style="padding:128px 16px" id="about">
-        <h3 class="w3-center">ABOUT THE COMPANY</h3>
-        <p class="w3-center w3-large">Key features of our company</p>
-        <div class="w3-row-padding w3-center" style="margin-top:64px">
-          <div class="w3-quarter">
-            <i class="fa fa-desktop w3-margin-bottom w3-jumbo w3-center"></i>
-            <p class="w3-large">Responsive</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-          </div>
-          <div class="w3-quarter">
-            <i class="fa fa-heart w3-margin-bottom w3-jumbo"></i>
-            <p class="w3-large">Passion</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-          </div>
-          <div class="w3-quarter">
-            <i class="fa fa-diamond w3-margin-bottom w3-jumbo"></i>
-            <p class="w3-large">Design</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-          </div>
-          <div class="w3-quarter">
-            <i class="fa fa-cog w3-margin-bottom w3-jumbo"></i>
-            <p class="w3-large">Support</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.</p>
-          </div>
-        </div>
-      </div>
-
-<script>
+</html>

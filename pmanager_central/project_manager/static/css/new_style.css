@@ -21,24 +21,6 @@ h3 {
 /* Add padding to containers */
 .container {
     width: 95%;
-    background-color: white;
-}
-
-/* Full-width input fields */
-input[type=text],
-input[type=date] {
-    width: 100%;
-    padding: 15px;
-    margin: 0px 0 25px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-}
-
-input[type=text]:focus,
-input[type=date]:focus {
-    background-color: #ddd;
-    outline: none;
 }
 
 /* Overwrite default styles of hr */
@@ -80,14 +62,38 @@ html {
     line-height: 1.6;
 }
 
+.errorlist {
+    color: red;
+}
+
 /* Full height image header */
 .bgimg-1 {
     background-position: center;
     background-size: cover;
-    background-image: url("{% static 'img/background.jpeg' %}");
+    background-image: url("../img/background.jpeg");
     min-height: 100%;
 }
 
 .w3-bar .w3-button {
     padding: 16px;
+}
+
+/* Styles for Registration page */
+.login-div {
+    max-width: 430px;
+    padding: 35px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+::placeholder {
+    opacity: 1;
+}
+
+.logo {
+    /*background-image: url("{% static 'img/logo.svg'%}");*/
+    background-image: url("../img/logo.svg");
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
 }

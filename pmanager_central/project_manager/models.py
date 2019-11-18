@@ -6,7 +6,6 @@ from django.urls import reverse
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
-from django.core.validators import RegexValidator
 
 
 class Organization(models.Model):
@@ -30,8 +29,6 @@ class Organization(models.Model):
         return reverse('volunto:organization-detail', args=(self.orgid,))
 
 
-
-
 class Project(models.Model):
     projectname = models.CharField("Project Name", max_length=200)
     projdesc = models.CharField("Project Description", max_length=500)
@@ -40,7 +37,6 @@ class Project(models.Model):
     project_deadline = models.DateTimeField(
         auto_now=False, auto_now_add=False, null=False)
     proj_created_at = models.DateTimeField(auto_now_add=True)
-    
     def __str__(self):
         return self.projectname
 
@@ -68,7 +64,6 @@ class Task(models.Model):
 #class Team(models.Model):
 #   member = models.ForeignKey(User, on_delete=models.CASCADE)
 #  project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
-    
     
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

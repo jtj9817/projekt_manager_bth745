@@ -40,7 +40,7 @@
         <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
         <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My Projects</a>
         <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create Project</a>
-        <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
+        <a href="{% url 'profile' %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
         <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Sign out</a>
       </div>
       <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -85,12 +85,6 @@
 							<td>
 								{{ project.proj_created_at }}
 							</td>
-						</tr>
-						<tr>
-							<!-- <td>
-								<a href="{% url 'project-update' project.projectid %}"><button type="button" class="btn btn-primary">Edit</button></a>
-								<a href="{% url 'project-delete' project.projectid %}"><button type="button" class="btn btn-warning">Delete</button></a>
-							</td> -->
 						</tr>
 						{% endfor %}
 					</tbody>
