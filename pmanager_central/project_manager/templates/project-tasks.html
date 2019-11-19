@@ -51,12 +51,11 @@
                 ProjectManager</a>
             <!-- Right-sided navbar links -->
             <div class="w3-right w3-hide-small">
-                <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
                 <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My
                     Projects</a>
                 <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create
                     Project</a>
-                <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
+                <a href="{% url 'profile' %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
                 <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i
                         class="fa fa-sign-out"></i> Sign out</a>
             </div>
