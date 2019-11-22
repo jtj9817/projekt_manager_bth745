@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserForm, ProjectsForm, TasksForm
+from .forms import UserForm, ProjectsForm, TasksForm, ProfileForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from django.views.generic import DetailView, View, CreateView, UpdateView, DeleteView, ListView
@@ -13,13 +13,16 @@ from django.utils.decorators import method_decorator
 from django.db import transaction
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
+from django.forms import formset_factory, inlineformset_factory
 
 # Create your views here.
 def index(request):
 	return render(request, 'index.html')
 def dashboard(request):
     return render(request, 'dashboard.html')
+def home(request):
+    return render(request, 'home.html')
 def login_user(request):
 	if request.method == "POST":
 		username = request.POST['username']
@@ -58,28 +61,25 @@ def register(request):
 @login_required
 @transaction.atomic
 def update_profile(request):
+    form = ProfileForm(instance=request.user)
+    context = {}
+    context['form'] = form
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        profile_form = ProfileForm(request.POST, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, _("Your profile was successfully updated!"))
+        form = ProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, ("Your profile was successfully updated!"))
+            return redirect('profile')
         else:
-            messages.error(request, _("Please correct the errors"))
-    else:
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-        return render(request, 'profile.html',{
-		'user_form': user_form,
-		'profile_form': profile_form
-	})
-
+            messages.error(request, ("Please correct the errors"))
+    return render(request, 'profile.html', context)
 
 #Views for Projects 
 @login_required
 @transaction.atomic
 def project_create(request):
+	TaskInlineFormSet = inlineformset_factory(Project, Task, fields=('task_name', 
+            'task_description','task_priority', 'task_performer'), extra=0)
 	if request.method == 'POST':
 		form = ProjectsForm(request.POST)
 		task_form = TasksForm(request.POST)
@@ -103,6 +103,34 @@ def project_create(request):
 		task_form = TasksForm()
 	return render(request, 'project_create.html', {'form': form, 'task_form': task_form})
 
+def task_create(request):
+	TaskInlineFormSet = inlineformset_factory(Project, Task, fields=('task_name', 
+            'task_description','task_priority', 'task_performer'), extra=0)
+	if request.method == 'POST':
+		task_form = TasksForm(request.POST)
+		if task_form.is_valid():
+			task = task_form.save(commit=False)
+			task_name = task_form.cleaned_data.get('task_name')
+			task_description = task_form.cleaned_data.get('task_description')
+			task_priority = task_form.cleaned_data.get('task_priority')
+			task_performer = task_form.cleaned_data.get('task_performer')
+			task.save()
+			return render(request,'task_success.html')
+	else:
+		task_form = TasksForm()
+	return render(request, 'task_create.html', {'task_form': task_form})
+
+@login_required
+def task_detail(request, pk):
+	template_name ="task_detail.html"
+	obj = get_object_or_404(Project, projectid=pk)
+	context = {}
+	tasks = Task.objects.filter(project__projectid=pk)
+	if obj is not None:
+		context['project'] = obj
+		context['tasks'] = tasks
+	return render(request, template_name, context)
+	
 class ProjectList(LoginRequiredMixin,ListView):
 	model = Project
 	context_object_name = 'projects_list'
@@ -123,10 +151,6 @@ def project_details(request, pk):
 		context['project'] = obj
 		context['tasks'] = tasks
 	return render(request, template_name, context)
-
-#class ProjectDetailView(LoginRequiredMixin,generic.DetailView):
-#	model = Project
-#	template_name = "project_detail.html"
  
 class ProjectUpdateView(FormView):
 	template_name = "project_update.html"
@@ -147,6 +171,7 @@ class ProjectUpdateView(FormView):
 			context['project'] = obj
 			context['form'] = form
 			context['projectid'] = obj.projectid
+			context['tasks'] = Task.objects.filter(project__projectid=obj.projectid)
 		return render(request, self.template_name, context)
 
 	def post(self, request, id=None, *args, **kwargs):
@@ -166,53 +191,27 @@ class ProjectUpdateView(FormView):
 			context['projectid'] = obj.projectid
 		return render(request, self.template_name, context)
 
-class ProjectUpdateView2(FormView):
+@login_required
+@transaction.atomic
+def ProjectUpdateView2(request,pk):
 	template_name = "project_update_second.html"
-	#Retrieve Project object from the <pk> value passed through the URL parameters
-	def get_object(self):
-		id = self.kwargs.get('pk')
-		obj = None
-		if id is not None:
-			obj = get_object_or_404(Project, projectid=id)
-		return obj
-	#Retrieve the ProjectsForm and TasksForm
-	def get(self, request, id=None, *args, **kwargs):
-		context = {}
-		obj = self.get_object()
-		task_obj = Task.objects.filter(project__projectid=obj.projectid)
-		if obj is not None:
-			form = ProjectsForm(instance=obj)
-			task_form = TasksForm()
-			context['project'] = obj
-			context['form'] = form
-			context['task_form'] = task_form
-			context['tasks'] = task_obj
-		return render(request, self.template_name, context)
-
-	def post(self, request, id=None, *args, **kwargs):
-		context = {}
-		obj = self.get_object()
-		if obj is not None:
-			form = ProjectsForm(request.POST, instance=obj)
-			task_form = TasksForm()
-			if form.is_valid() and task_form.is_valid():
-				project = form.save(commit=False)
-				projectname = form.cleaned_data.get('projectname')
-				projdesc = form.cleaned_data.get('projdesc')
-				project_deadline = form.cleaned_data.get('project_deadline')
-				project.save()
-				task = task_form.save(commit=False)
-
-				messages.success(request, 'Project was edited successfully')
-			context['project'] = obj	
-			context['form'] = form
-			context['task_form'] = task_form
-		return render(request, self.template_name, context)
+	TaskInlineFormSet = inlineformset_factory(Project, Task, fields=('task_name', 
+            'task_description','task_priority', 'task_performer'), extra=0, can_delete=True)
+	project = Project.objects.get(projectid=pk)
+	tasks = Task.objects.filter(project__projectid=pk)
+	if request.method == "POST":
+		formset = TaskInlineFormSet(request.POST, request.FILES, instance=project)
+		if formset.is_valid():
+			formset.save()
+			return redirect('project-update-second',project.projectid)
+	else:
+		formset = TaskInlineFormSet(instance=project)
+	return render(request, 'project_update_second.html', {'formset':formset, 'project':project, 'tasks': tasks})
 
 class ProjectDelete(LoginRequiredMixin,View):
 	template_name = "project_delete.html"
 	success_message = "Project was deleted successfully!"
- 
+
 	def get_object(self):
 		id = self.kwargs.get('pk')
 		obj = None
@@ -239,4 +238,25 @@ class ProjectDelete(LoginRequiredMixin,View):
 			return redirect('dashboard')	
 		return render(request, self.template_name, context)
 
- 
+ #Generic CRUD for Tasks
+class TasksList(LoginRequiredMixin,ListView):
+	model = Task
+	context_object_name = "tasks"
+     #template_name = "tasks_list.html"
+	def get_context_data(self, **kwargs):
+		 # Call the base implementation first to get a context
+		context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+		context['tasks'] = Task.objects.filter(project__projectid=pk)
+		return context
+class TaskDetail(LoginRequiredMixin,DetailView):
+	model = Task
+	template_name = "task_detail.html"
+class TaskUpdate(LoginRequiredMixin, UpdateView):
+    model = Task
+    context_object_name = 'task'
+	 #template_name = "task_update.html"
+
+class TaskDelete(LoginRequiredMixin, DeleteView):
+    model = Task
+	 #template_name = "task_delete.html"

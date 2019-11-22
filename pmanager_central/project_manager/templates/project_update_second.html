@@ -1,9 +1,10 @@
 {% load static %}
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
 
-<head>
-    <title>Edit Project</title>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Task</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -11,150 +12,252 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/6809fcf225.js" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS File -->
-    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Main CSS file -->
     <link href="{% static 'css/new_style.css' %}" rel="stylesheet">
     <!-- Javascript Libraries -->
-    <script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
-    <script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-</head>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="{% static 'js/dynamic-formset.js' %}"></script>
+    
+    <!--Script for Adding/Remove Task Forms-->
+    <script>
+        $(function () {
+            $('#tasksForm tr').formset({
+                addText: 'Add Another Task',
+                deleteText: 'Remove Task Form',
+                addCssClass: 'w3-button w3-blue-grey',
+                prefix: '{{ formset.prefix }}'
+            });
+        })
+    </script>
+    <style>
+      .carousel-item {
+        text-align: center;
+        min-height: 280px;
+      }
+      </style>
+  </head>
 
-<body>
-    <!-- Navbar (sit on top) -->
-    <div class="w3-top">
-        <div class="w3-bar w3-white w3-card" id="myNavbar">
-            <a href='#home' class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> ProjectManager</a>
-            <!-- Right-sided navbar links -->
-            <div class="w3-right w3-hide-small">
-                <a href="#about" class="w3-bar-item w3-button">ABOUT</a>
-                <a href="{% url 'dashboard' %}" class="w3-bar-item w3-button"><i class="fa fa-list"></i> My
-                    Projects</a>
-                <a href="{% url 'project-create' %}" class="w3-bar-item w3-button"><i class="fa fa-plus"></i> Create
-                    Project</a>
-                <a href="#profile" class="w3-bar-item w3-button"><i class="fa fa-user"></i> My Profile</a>
-                <a href="{% url 'logout'%}?next={{request.path}}" class="w3-bar-item w3-button"><i
-                        class="fa fa-sign-out"></i> Sign out</a>
-            </div>
-            <!-- Hide right-floated links on small screens and replace them with a menu icon -->
-            <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
-                onclick="w3_open()">
-                <i class="fa fa-bars"></i>
-            </a>
-        </div>
-    </div>
-    <!--Navbar end-->
-    <div style="margin-top: 110px">
-        <div class="row">
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4">
-                {% if messages %}
-                {% for message in messages %}
-                <div class="col-md-12 alert alert-success alert-dismissible fade show">{{ message}}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endfor %}
-                {% endif %}
-                <div class="card">
-                    <h5 class="card-header">
-                        Edit Project Tasks
-                    </h5>
-                    <div class="card-body text-center">
-                        <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div>
-                                <ul>
-                                    {% for task in tasks %}
-                                    <div class="row">
-                                    </div>
-                                    <h5 class="w3-green">{{ task.task_name}} </h5>
-                                    <h5>Task Description</h5>
-                                    {{ task.task_description }}
-                                    <h5>Task Priority</h5>
-                                    {{ task.get_task_priority_display }}
-                                    <h5>Task Performer</h5>
-                                    {{ task.task_performer }}
-                                    
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <div class="w3-bar">
-                                <div class="w3-bar-item"><button type="submit" formmethod="post"
-                                        class="btn btn-primary"> Save Changes
-                                    </button></div>
-                                <div class="w3-bar-item w3-right"><button class="btn"><a
-                                            href="{% url 'dashboard' %}">Cancel</a></button></div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <h5 class="card-header">
-                        Project Details
-                    </h5>
-                    <div class="card-body text-center">
-                        <p class="card-text">
-                            <h2>Project Name:</h2>
-                            <h3 class="card-title mt-3">{{ project.projectname }}</h3>
-                            <h5>Project Created: </h5>
-                            <p>{{ project.proj_created_at }}<p>
-                                    <h5>Project Description</h5>
-                                    <p>{{ project.projdesc }}</P>
-                                    <h5>Project Deadline</h5>
-                                    <p>{{ project.project_deadline }}</p>
-                                    <!--<h5>Project Members</h5> -->
-                                    <!--<h5>Project Tasks</h5> -->
-                                </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--container end.//-->
+  <body>
+     <!-- Header -->
+     <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="text-transform: uppercase;">
+          <a class="navbar-brand" href="#">Product Managment</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+              
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Products & Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'project-create' %}">Create Project</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'project-update' project.projectid %}">Project Details</a>
+                </li>
+            </ul>
+            {% if user.is_authenticated %}
+            {% block empty %}{% endblock%}
+            {% else %}
+            <span span class="navbar-text" class="{% block register_active %}{% endblock %}">
+              <a href="{% url 'register' %}">Sign Out</a>
+            </span>
+            <span class="navbar-text" class="{% block login_active %}{% endblock %}">
+              <a href="{% url 'login' %}">Log In</a>
+            </span>
+            {% endif %}
+            {% if user.is_authenticated %}
+            <span class="navbar-text" style="padding-right: 10px;">
+              <a href="%">{{ user.get_username }}</a>
+            </span>
+            {% csrf_token %}
+            <span class="navbar-text">
+              <a href="{% url 'logout'%}?next={{request.path}}">Sign out</a>
+            </span>
+            {% endif %}
+          </div>
+        </nav>
+    </header>
+    <!-- Header -->
 
-    <!-- Modal -->
-    <div class="modal fade bannerformodal" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+    <!-- Container -->
+    <div class="container">
+        <div class="row" style="margin-top: 20px;">
+          <div class="col-12 col-md-6 cl-xl-6">
+            <div>
+              <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Wrapper for carousel items -->
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="{% static 'img/gallery/gallery-5.jpg' %}" alt="First Slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="{% static 'img/gallery/gallery-2.jpg' %}" alt="Second Slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img  src="{% static 'img/gallery/gallery-3.jpg' %}" alt="Third Slide">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="{% static 'img/gallery/gallery-4.jpg' %}" alt="Fourth Slide">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-6">
+            <div class="card bg-light">
+              <article class="card-body mx-auto" style="max-width: 400px;">
+                <h4 class="card-title mt-3 text-center">Edit Task for</h4>
+                <h2>{{ project.projectname }}</h2><br>
+                  {% for task in tasks %}
+                  <h5>{{ task.task_name}} </h5>
+                  <form action="" method="post">
+                  {% csrf_token %}
+                    <div class="w3-bar-item">
+                      <a href="bannerformodal" data-toggle="modal" data-target="#taskModal">
+                        <button type="button" class="btn btn-danger">DELETE</button>
+                      </a>
+                    </div>
+                  </form>
+                  {% endfor %}
+
+              <div class="card-body text-center">
+                <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
+                  {{ formset.management_form }}
+                  {% csrf_token %}
+                  <table class="table" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        {% for form in formset.forms %}
+                          <tr>
+                           <td>{{ form | crispy }}</td>
+                          </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                  <div class="w3-bar">
+                    <button type="submit" formmethod="post" class="btn btn-primary">SAVE</button>
+                    <button class="btn btn-secondary">
+                      <a class="text-light" href="{% url 'project-update' project.projectid %}">CANCEL</a>
                     </button>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form" action="" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ task_form | crispy }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" formmethod="post" onclick="postTask()">Save changes</button>
-                </div>
+                  </div>
                 </form>
-            </div>
+              </div> 
+            </article>
+          </div>
         </div>
+      </div>
     </div>
-</body>
-<!--Script for AJAX using the Task modal-->
-<script>
-    function postTask() {
-        $.ajax({
-            url: '/project/update/second/'
-            type: "POST",
-            datatype: "formData",
-            async: true,
-            success: function (data) {
-                $('#output').html(data.html_form)
-            }
-        });
-    }
-</script>
+    <!-- Container -->
 
+  <!-- Modal -->
+	<div class="modal fade bannerformodal" id="taskModal" 
+       tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="taskModalLabel">Delete Task</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body alert-danger">
+     <p>Are you sure you want to delete this task?</p>
+       </div>
+       <div class="modal-footer">
+   <form action="" method="POST">
+     {% csrf_token %}
+     <button type="button" class="btn btn-danger" data-dismiss="modal">DELETE</button>
+       <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+   </form>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!-- Modal -->
+
+ <!-- Footer -->
+ <footer class="page-footer font-small">
+    <!-- Footer Links -->
+    <div class="container">
+      <hr class="rgba-white-light" style="margin: 0 15%;">
+      <!-- Grid row-->
+      <div class="row text-center d-flex justify-content-center pt-5 mb-3">
+        <!-- Grid column -->
+        <div class="col-md-2 mb-3">
+          <h6 class="text-uppercase font-weight-bold">
+            <a href="{% url 'index' %}">About</a>
+          </h6>
+        </div>
+        <!-- Grid column -->
+    
+        <!-- Grid column -->
+        <div class="col-md-2 mb-3">
+          <h6 class="text-uppercase font-weight-bold">
+            <a href="#!">Products</a>
+          </h6>
+        </div>
+        <!-- Grid column -->
+  
+        <!-- Grid column -->
+        <div class="col-md-2 mb-3">
+          <h6 class="text-uppercase font-weight-bold">
+              <a href="#!">Copyright</a>
+          </h6>
+        </div>
+        <!-- Grid column -->
+    
+        <!-- Grid column -->
+        <div class="col-md-2 mb-3">
+          <h6 class="text-uppercase font-weight-bold">
+            <a href="#!">Privacy</a>
+          </h6>
+        </div>
+        <!-- Grid column -->
+    
+        <!-- Grid column -->
+        <div class="col-md-2 mb-3">
+          <h6 class="text-uppercase font-weight-bold">
+            <a href="#!">Contact</a>
+          </h6>
+        </div>
+        <!-- Grid column -->
+    
+      </div>
+      <!-- Grid row-->
+      
+      <hr class="rgba-white-light" style="margin: 0 15%;">
+    </div>
+    <!-- Footer Links -->
+    
+    <!-- Copyright -->
+    <div class="float-right"><a href="#">Back to top</a></div>
+    <div class="footer-copyright text-center py-3">&copy; 2019 All rights reserved. Design by Product Manager</div>
+    <!-- Copyright -->
+    
+  </footer>
+  <!-- Footer -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
 </html>
