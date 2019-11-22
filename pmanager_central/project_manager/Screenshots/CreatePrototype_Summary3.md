@@ -1,7 +1,6 @@
 # Create Project
 ![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype3Iryna/pmanager_central/project_manager/Screenshots/CreateProject.jpg)
 
-# Create Project
 ![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype3Iryna/pmanager_central/project_manager/Screenshots/CreateProject1.jpg)
 
 # Update Project
