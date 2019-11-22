@@ -18,7 +18,7 @@
 ![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype3Iryna/pmanager_central/project_manager/Screenshots/AddTask.jpg)
 
 # Update Task 
-![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype3Iryna/pmanager_central/project_manager/Screenshots/UpdateTaskScreen.jpg)
+![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype3Iryna/pmanager_central/project_manager/Screenshots/UpdateTask.jpg)
 
 # Delete Task
 ![](https://raw.githubusercontent.com/jtj9817/projekt_manager_bth745/prototype3Iryna/pmanager_central/project_manager/Screenshots/DeleteTask.jpg)
